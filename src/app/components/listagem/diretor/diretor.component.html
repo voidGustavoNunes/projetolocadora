@@ -1,0 +1,10 @@
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="diretoresDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Diretores
+  </a>
+  <div class="dropdown-menu" aria-labelledby="diretoresDropDown">
+    <a *ngFor="let diretor of diretores" class="dropdown-item" href="#">
+      {{ diretor.nome }}
+    </a>
+  </div>
+</li>

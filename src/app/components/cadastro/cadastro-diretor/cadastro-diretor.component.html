@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>Cadastrar Diretor</h2>
+  <form #diretorForm="ngForm" (ngSubmit)="onSubmit(diretorForm)">
+    <div class="form-group">
+      <label for="nome">Nome do Diretor</label>
+      <input type="text" id="nome" name="nome" class="form-control" required [(ngModel)]="diretor.nome">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="diretorForm.invalid">Cadastrar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel(diretorForm)">Cancelar</button>
+  </form>
+</div>

@@ -6,8 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu-categories.component.css']
 })
 export class MenuCategoriesComponent implements OnInit{
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
+  constructor(){
   }
-  
+
+  ngOnInit(): void {
+
+  }
+
 }
