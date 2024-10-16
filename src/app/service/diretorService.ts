@@ -1,7 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable, map } from "rxjs";
 import { Diretor } from "../modules/diretor";
+import { Injectable } from "@angular/core";
 
+
+@Injectable({
+  providedIn: 'root'
+})
 export class DiretorService{
 
   // private baseUrl = "http://localhost:8080/home";
@@ -12,8 +17,8 @@ export class DiretorService{
   constructor(private httpClient: HttpClient) { }
 
   getDiretorList(): Observable<Diretor[]> {
-    return this.httpClient.get<GetResponseDiretor>(this.diretorUrl).pipe(
-      map(response => response._embedded.diretores)
+    return this.httpClient.get<Diretor[]>(this.diretorUrl).pipe(
+      map(response => response)
     );
 
   }
@@ -26,17 +31,17 @@ export class DiretorService{
   createDiretor(diretor: Diretor): Observable<Diretor> {
     return this.httpClient.post<Diretor>(this.diretorUrl, diretor);
   }
+
+  updateDiretor(diretor: Diretor): Observable<Diretor> {
+    return this.httpClient.put<Diretor>(`${this.diretorUrl}/${diretor.id}`, diretor);
+  }
+
+  apagarDiretor(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.diretorUrl}/${id}`);
+  }
 }
 interface GetResponseDiretor {
-  _embedded: {
-    diretores: Diretor[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+  diretores: Diretor[];
 
-  }
 
 }

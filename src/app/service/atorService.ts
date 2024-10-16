@@ -20,10 +20,9 @@ export class AtorService {
   constructor(private httpClient: HttpClient) { }
 
   getAtoresList(): Observable<Ator[]> {
-    return this.httpClient.get<GetResponseAtores>(this.atorUrl).pipe(
-      map(response => response._embedded.atores)
+    return this.httpClient.get<Ator[]>(this.atorUrl).pipe(
+      map(response => response) // Aqui, apenas retorne a resposta, pois já é um array
     );
-
   }
 
   getAtor(atorId: number): Observable<Ator>{
@@ -35,17 +34,17 @@ export class AtorService {
     return this.httpClient.post<Ator>(this.atorUrl, ator);
   }
 
+  updateAtor(ator: Ator): Observable<Ator> {
+    return this.httpClient.put<Ator>(`${this.atorUrl}/${ator.id}`, ator);
+  }
+
+  apagarAtor(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.atorUrl}/${id}`);
+  }
+
 
 }
 interface GetResponseAtores {
-  _embedded: {
-    atores: Ator[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+  ator: Ator[];
 
-  }
 }

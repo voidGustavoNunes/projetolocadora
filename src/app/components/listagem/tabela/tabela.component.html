@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Controle de Acervo</h2>
+
+  <!-- Filtro de Tipo -->
+  <div class="form-group">
+    <label for="filtro">Filtrar por:</label>
+    <select class="form-control" id="filtro" [(ngModel)]="filtroSelecionado" (change)="filtrarDados()">
+      <option value="atores">Atores</option>
+      <option value="classes">Classes</option>
+      <option value="diretores">Diretores</option>
+    </select>
+  </div>
+
+  <!-- Tabela de Itens -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngIf="filtroSelecionado === 'atores'">Nome do Ator</th>
+        <th *ngIf="filtroSelecionado === 'classes'">Nome da Classe</th>
+        <th *ngIf="filtroSelecionado === 'classes'">Valor</th>
+        <th *ngIf="filtroSelecionado === 'classes'">Data de Devolução</th>
+        <th *ngIf="filtroSelecionado === 'diretores'">Nome do Diretor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of itensFiltrados">
+        <td>{{ item.nome }}</td>
+        <td *ngIf="filtroSelecionado === 'classes'">{{ item.valor | currency }}</td>
+        <td *ngIf="filtroSelecionado === 'classes'">{{ item.dataDevolucao | date }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editarItem(item)">Editar</button>
+          <button class="btn btn-danger" (click)="apagarItem(item)">Apagar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

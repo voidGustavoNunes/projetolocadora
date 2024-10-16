@@ -1,19 +1,28 @@
 <div class="container">
-  <h2>Cadastrar Classe</h2>
-  <form #classeForm="ngForm" (ngSubmit)="onSubmit(classeForm)">
+  <h2>{{ classe.id ? 'Editar Classe' : 'Cadastrar Classe' }}</h2>
+
+  <form (ngSubmit)="salvar()" #classeForm="ngForm">
     <div class="form-group">
-      <label for="nome">Nome da Classe</label>
-      <input type="text" id="nome" name="nome" class="form-control" required [(ngModel)]="classe.nome">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" class="form-control" [(ngModel)]="classe.nome" name="nome" required #nome="ngModel">
+      <div *ngIf="nome.invalid && nome.touched" class="text-danger">
+        O nome da classe é obrigatório.
+      </div>
     </div>
     <div class="form-group">
-      <label for="valor">Valor da Classe</label>
-      <input type="number" id="valor" name="valor" class="form-control" required [(ngModel)]="classe.valor">
+      <label for="valor">Valor:</label>
+      <input type="number" id="valor" class="form-control" [(ngModel)]="classe.valor" name="valor" required #valor="ngModel">
+      <div *ngIf="valor.invalid && valor.touched" class="text-danger">
+        O valor da classe é obrigatório.
+      </div>
     </div>
     <div class="form-group">
-      <label for="dataDevolucao">Data de Devolução</label>
-      <input type="date" id="dataDevolucao" name="dataDevolucao" class="form-control" required [(ngModel)]="classe.dataDevolucao">
+      <label for="dataDevolucao">Data de Devolução:</label>
+      <input type="date" id="dataDevolucao" class="form-control" [(ngModel)]="classe.dataDevolucao" name="dataDevolucao" required #dataDevolucao="ngModel">
+      <div *ngIf="dataDevolucao.invalid && dataDevolucao.touched" class="text-danger">
+        A data de devolução é obrigatória.
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="classeForm.invalid">Cadastrar</button>
-    <button type="button" class="btn btn-secondary" (click)="onCancel(classeForm)">Cancelar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="classeForm.invalid">Salvar</button>
   </form>
 </div>

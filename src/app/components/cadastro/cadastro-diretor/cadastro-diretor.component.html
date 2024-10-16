@@ -1,11 +1,14 @@
 <div class="container">
-  <h2>Cadastrar Diretor</h2>
-  <form #diretorForm="ngForm" (ngSubmit)="onSubmit(diretorForm)">
+  <h2>{{ diretor.id ? 'Editar Diretor' : 'Cadastrar Diretor' }}</h2>
+
+  <form (ngSubmit)="salvar()" #diretorForm="ngForm">
     <div class="form-group">
-      <label for="nome">Nome do Diretor</label>
-      <input type="text" id="nome" name="nome" class="form-control" required [(ngModel)]="diretor.nome">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" class="form-control" [(ngModel)]="diretor.nome" name="nome" required #nome="ngModel">
+      <div *ngIf="nome.invalid && nome.touched" class="text-danger">
+        O nome do diretor é obrigatório.
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="diretorForm.invalid">Cadastrar</button>
-    <button type="button" class="btn btn-secondary" (click)="onCancel(diretorForm)">Cancelar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="diretorForm.invalid">Salvar</button>
   </form>
 </div>

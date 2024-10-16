@@ -1,35 +1,18 @@
-export class Classe{
-
-  public get valor(): number {
-    return this._valor;
-  }
-  public set valor(value: number) {
-    this._valor = value;
-  }
-  public get id(): number {
-    return this._id;
-  }
-  public get nome(): string {
-    return this._nome;
-  }
-  public set nome(value: string) {
-    this._nome = value;
-  }
-
-  public get dataDevolucao(): Date {
-    return this._dataDevolucao;
-  }
-  public set dataDevolucao(value: Date) {
-    this._dataDevolucao = value;
-  }
+export class Classe {
+  public id: number; // Propriedade pública para id
+  public nome: string; // Propriedade pública para nome
+  public valor: number; // Propriedade pública para valor
+  public dataDevolucao: Date; // Propriedade pública para dataDevolucao
 
   constructor(
-    private _id : number,
-    private _nome: string,
-    private _valor: number,
-    private _dataDevolucao: Date,
-  ){
-
-
+    id: number,
+    nome: string,
+    valor: number,
+    dataDevolucao: Date,
+  ) {
+    this.id = id; // Inicializa o id no construtor
+    this.nome = nome; // Inicializa o nome no construtor
+    this.valor = valor; // Inicializa o valor no construtor
+    this.dataDevolucao = dataDevolucao; // Inicializa a data de devolução no construtor
   }
 }

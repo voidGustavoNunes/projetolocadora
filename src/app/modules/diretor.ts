@@ -1,20 +1,12 @@
-export class Diretor{
-  public get nome(): string {
-    return this._nome;
-  }
-  public set nome(value: string) {
-    this._nome = value;
-  }
-  public get id(): number {
-    return this._id;
-  }
+export class Diretor {
+  public id: number; // Propriedade pública para id
+  public nome: string; // Propriedade pública para nome
+
   constructor(
-    private _id: number,
-    private _nome: string,
-
-  )
-  {
-
-
+    id: number,
+    nome: string,
+  ) {
+    this.id = id; // Inicializa o id no construtor
+    this.nome = nome; // Inicializa o nome no construtor
   }
 }

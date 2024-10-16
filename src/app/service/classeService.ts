@@ -1,7 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Classe } from "../modules/classe";
 import { map, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
 
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ClasseService {
 
   // private baseUrl = "http://localhost:8080/home";
@@ -12,8 +17,8 @@ export class ClasseService {
   constructor(private httpClient: HttpClient) { }
 
   getClassesList(): Observable<Classe[]> {
-    return this.httpClient.get<GetResponseClasses>(this.classeUrl).pipe(
-      map(response => response._embedded.classes)
+    return this.httpClient.get<Classe[]>(this.classeUrl).pipe(
+      map(response => response)
     );
 
   }
@@ -27,16 +32,17 @@ export class ClasseService {
     return this.httpClient.post<Classe>(this.classeUrl, classe);
   }
 
+  updateClasse(classe: Classe): Observable<Classe> {
+    return this.httpClient.put<Classe>(`${this.classeUrl}/${classe.id}`, classe);
+  }
+
+  apagarClasse(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.classeUrl}/${id}`);
+  }
+
+
 }
 interface GetResponseClasses {
-  _embedded: {
     classes: Classe[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
 
-  }
 }

@@ -14,10 +14,17 @@ import { CadastroDiretorComponent } from './components/cadastro/cadastro-diretor
 import { CadastroClasseComponent } from './components/cadastro/cadastro-classe/cadastro-classe.component';
 import { FormsModule } from '@angular/forms';
 import { BaseComponent } from './components/base/base.component';
+import { TabelaComponent } from './components/listagem/tabela/tabela.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AtorService } from './service/atorService';
+import { ClasseService } from './service/classeService';
+import { DiretorService } from './service/diretorService';
 
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
+  {path: 'cadastro-classe', component: CadastroClasseComponent },
+  {path: 'cadastro-diretor', component: CadastroDiretorComponent },
   {path: 'atores/:id', component: AtorComponent},
   {path: 'search/:keyword', component: SearchComponent},
   {path: 'classes/:id', component: ClasseComponent},
@@ -43,15 +50,21 @@ const routes : Routes = [
     CadastroDiretorComponent,
     CadastroClasseComponent,
     BaseComponent,
+    TabelaComponent,
+
 
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AtorService,
+              ClasseService,
+              DiretorService
+  ],
   bootstrap: [AppComponent]
 })
 
