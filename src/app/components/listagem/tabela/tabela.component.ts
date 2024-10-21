@@ -1,26 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Ator } from 'src/app/modules/ator';
-import { Classe } from 'src/app/modules/classe';
-import { Diretor } from 'src/app/modules/diretor';
 import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
 import { DiretorService } from 'src/app/service/diretorService';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { Ator } from 'src/app/modules/ator';
+import { Classe } from 'src/app/modules/classe';
+import { Diretor } from 'src/app/modules/diretor';
 
 @Component({
   selector: 'app-tabela',
   templateUrl: './tabela.component.html',
   styleUrls: ['./tabela.component.css']
 })
-export class TabelaComponent implements OnInit {
+export class TabelaComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  dataSourceAtores = new MatTableDataSource<Ator>();
+  dataSourceClasses = new MatTableDataSource<Classe>();
+  dataSourceDiretores = new MatTableDataSource<Diretor>();
 
-  filtroSelecionado: string = 'atores'; // Inicialmente mostra Atores
-  itensFiltrados: any[] = [];
+  filtroSelecionado: string = 'atores';
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor>();
 
   atores: any[] = [];
   classes: any[] = [];
   diretores: any[] = [];
+
+  displayedColumns: string[] = [];
+
 
   constructor(
     private atorService: AtorService,
@@ -29,27 +38,43 @@ export class TabelaComponent implements OnInit {
     private router: Router
   ) {}
 
+
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.itensFiltrados.paginator = this.paginator;
+    }
+
+  }
+
   ngOnInit(): void {
-    // Carregar todos os dados inicialmente
+
     this.carregarAtores();
     this.carregarClasses();
     this.carregarDiretores();
   }
 
-  // Função de filtro
+
   filtrarDados(): void {
     if (this.filtroSelecionado === 'atores') {
-      this.itensFiltrados = this.atores;
+      this.itensFiltrados.data = this.atores;
+      this.displayedColumns = ['nome'];
     } else if (this.filtroSelecionado === 'classes') {
-      this.itensFiltrados = this.classes;
+      this.itensFiltrados.data = this.classes;
+      this.displayedColumns = ['nome', 'valor', 'dataDevolucao'];
     } else if (this.filtroSelecionado === 'diretores') {
-      this.itensFiltrados = this.diretores;
+      this.itensFiltrados.data = this.diretores;
+      this.displayedColumns = ['nome'];
+    }
+
+    if (this.paginator) {
+      this.itensFiltrados.paginator = this.paginator;
     }
   }
 
   // Carregar os dados do backend
   carregarAtores(): void {
-    this.atorService.getAtoresList().subscribe(
+    this.atorService.getList().subscribe(
       data => {
         this.atores = data;
         this.filtrarDados();
@@ -59,7 +84,7 @@ export class TabelaComponent implements OnInit {
   }
 
   carregarClasses(): void {
-    this.classeService.getClassesList().subscribe(
+    this.classeService.getList().subscribe(
       data => {
         this.classes = data;
         this.filtrarDados();
@@ -69,7 +94,7 @@ export class TabelaComponent implements OnInit {
   }
 
   carregarDiretores(): void {
-    this.diretorService.getDiretorList().subscribe(
+    this.diretorService.getList().subscribe(
       data => {
         this.diretores = data;
         this.filtrarDados();
@@ -82,7 +107,7 @@ export class TabelaComponent implements OnInit {
   editarItem(item: any): void {
     if (this.filtroSelecionado === 'atores') {
       console.log('Editar Ator', item);
-      this.router.navigate(['/cadastro-ator'], { state: { item } }); // Redireciona com o item
+      this.router.navigate(['/cadastro-ator'], { state: { item } });
     } else if (this.filtroSelecionado === 'classes') {
       console.log('Editar Classe', item);
       this.router.navigate(['/cadastro-classe'], { state: { item } });
@@ -92,32 +117,32 @@ export class TabelaComponent implements OnInit {
     }
   }
 
-  
+
   apagarItem(item: any): void {
     const confirmacao = confirm(`Tem certeza que deseja apagar ${item.nome}?`);
     if (confirmacao) {
       if (this.filtroSelecionado === 'atores') {
-        this.atorService.apagarAtor(item.id).subscribe(
+        this.atorService.delete(item.id).subscribe(
           () => {
-            this.carregarAtores(); // Atualiza a lista após exclusão
+            this.carregarAtores();
             this.filtrarDados();
             console.log('Ator apagado com sucesso.');
           },
           error => console.error('Erro ao apagar ator', error)
         );
       } else if (this.filtroSelecionado === 'classes') {
-        this.classeService.apagarClasse(item.id).subscribe(
+        this.classeService.delete(item.id).subscribe(
           () => {
-            this.carregarClasses(); // Atualiza a lista após exclusão
+            this.carregarClasses();
             this.filtrarDados();
             console.log('Classe apagada com sucesso.');
           },
           error => console.error('Erro ao apagar classe', error)
         );
       } else if (this.filtroSelecionado === 'diretores') {
-        this.diretorService.apagarDiretor(item.id).subscribe(
+        this.diretorService.delete(item.id).subscribe(
           () => {
-            this.carregarDiretores(); // Atualiza a lista após exclusão
+            this.carregarDiretores();
             this.filtrarDados();
             console.log('Diretor apagado com sucesso.');
           },

@@ -22,7 +22,7 @@ export class DiretorComponent implements OnInit{
 
 
   listDiretores(){
-    this.diretorService.getDiretorList().subscribe(
+    this.diretorService.getList().subscribe(
       data => {
         console.log('Diretores =' + JSON.stringify(data));
         this.diretores = data;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Diretor } from 'src/app/modules/diretor'; // Ajuste o caminho conforme necessário
-import { DiretorService } from 'src/app/service/diretorService'; // Ajuste o caminho conforme necessário
+import { Diretor } from 'src/app/modules/diretor';
+import { DiretorService } from 'src/app/service/diretorService';
 
 @Component({
   selector: 'app-cadastro-diretor',
@@ -9,13 +9,15 @@ import { DiretorService } from 'src/app/service/diretorService'; // Ajuste o cam
   styleUrls: ['./cadastro-diretor.component.css']
 })
 export class CadastroDiretorComponent implements OnInit {
-  diretor: Diretor = { id: 0, nome: '' }; // Inicializar o diretor
+  diretor: Diretor;
 
-  constructor(private diretorService: DiretorService, private router: Router) {}
+  constructor(private diretorService: DiretorService, private router: Router) {
+    this.diretor = new Diretor(undefined, '');
+  }
 
   ngOnInit(): void {
     if (history.state.item) {
-      this.diretor = history.state.item; // Carregar dados do diretor para edição
+      this.diretor = history.state.item;
     }
   }
 
@@ -25,12 +27,12 @@ export class CadastroDiretorComponent implements OnInit {
       return;
     }
 
-    if (this.diretor.id) {
-      this.diretorService.updateDiretor(this.diretor).subscribe(() => {
+    if (this.diretor.id !== undefined && this.diretor.id !== null) {
+      this.diretorService.update(this.diretor.id, this.diretor).subscribe(() => {
         this.router.navigate(['/tabela-diretor']);
       });
     } else {
-      this.diretorService.createDiretor(this.diretor).subscribe(() => {
+      this.diretorService.create(this.diretor).subscribe(() => {
         this.router.navigate(['/tabela-diretor']);
       });
     }

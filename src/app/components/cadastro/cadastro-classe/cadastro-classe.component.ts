@@ -9,13 +9,16 @@ import { ClasseService } from 'src/app/service/classeService'; // Ajuste o camin
   styleUrls: ['./cadastro-classe.component.css']
 })
 export class CadastroClasseComponent implements OnInit {
-  classe: Classe = { id: 0, nome: '', valor: 0, dataDevolucao: new Date() }; // Inicializar classe
+  classe: Classe;
 
-  constructor(private classeService: ClasseService, private router: Router) {}
+  constructor(private classeService: ClasseService, private router: Router) {
+    this.classe = new Classe(undefined, '', 0, new Date());
+  }
 
   ngOnInit(): void {
+    console.log("dados recebidos: ", history.state.item);
     if (history.state.item) {
-      this.classe = history.state.item; // Carregar dados da classe para edição
+      this.classe = history.state.item;
     }
   }
 
@@ -25,12 +28,12 @@ export class CadastroClasseComponent implements OnInit {
       return;
     }
 
-    if (this.classe.id) {
-      this.classeService.updateClasse(this.classe).subscribe(() => {
+    if (this.classe.id !== undefined && this.classe.id !== null) {
+      this.classeService.update(this.classe.id,this.classe).subscribe(() => {
         this.router.navigate(['/tabela-classe']);
       });
     } else {
-      this.classeService.createClasse(this.classe).subscribe(() => {
+      this.classeService.create(this.classe).subscribe(() => {
         this.router.navigate(['/tabela-classe']);
       });
     }

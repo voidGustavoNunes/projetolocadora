@@ -9,34 +9,31 @@ import { AtorService } from 'src/app/service/atorService'; // Ajuste o caminho c
   styleUrls: ['./cadastro-ator.component.css']
 })
 export class CadastroAtorComponent implements OnInit {
-  ator: Ator = { id: 0, nome: '' }; // Inicializar ator vazio para o cadastro
+  ator: Ator;
 
-  constructor(private atorService: AtorService, private router: Router) {}
+  constructor(private atorService: AtorService, private router: Router) {
+    this.ator = new Ator(undefined, ''); // Inicializa o nome com uma string vazia, e o id com 0
+  }
 
   ngOnInit(): void {
-    // Verificar se existe um ator no estado, para a edição
     if (history.state.item) {
-      this.ator = history.state.item; // Carregar dados do ator para edição
+      this.ator = history.state.item; // Se o ator já existe, o id será carregado
     }
   }
 
-  // Método para salvar ou editar o ator
   salvar(): void {
-    if (this.ator.nome.trim() === '') {
-      // Se o nome estiver vazio ou apenas com espaços
+    if (!this.ator.nome.trim()) {
       alert('O nome do ator é obrigatório.');
       return;
     }
 
-    if (this.ator.id) {
-      // Atualizar o ator existente
-      this.atorService.updateAtor(this.ator).subscribe(() => {
-        this.router.navigate(['/tabela']); // Redirecionar para a lista após a edição
+    if (this.ator.id !== undefined && this.ator.id !== null) {
+      this.atorService.update(this.ator.id, this.ator).subscribe(() => {
+        this.router.navigate(['/tabela']);
       });
     } else {
-      // Criar novo ator
-      this.atorService.createAtor(this.ator).subscribe(() => {
-        this.router.navigate(['/tabela']); // Redirecionar para a lista após a criação
+      this.atorService.create(this.ator).subscribe(() => {
+        this.router.navigate(['/tabela']);
       });
     }
   }

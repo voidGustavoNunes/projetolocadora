@@ -19,7 +19,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AtorService } from './service/atorService';
 import { ClasseService } from './service/classeService';
 import { DiretorService } from './service/diretorService';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ItemComponent } from './components/listagem/item/item.component';
+import { CadastroItemComponent } from './components/cadastro/cadastro-item/cadastro-item.component';
+import { CadastroTituloComponent } from './components/cadastro/cadastro-titulo/cadastro-titulo.component';
+import { TituloComponent } from './components/listagem/titulo/titulo.component';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
@@ -51,6 +56,10 @@ const routes : Routes = [
     CadastroClasseComponent,
     BaseComponent,
     TabelaComponent,
+    ItemComponent,
+    CadastroItemComponent,
+    CadastroTituloComponent,
+    TituloComponent,
 
 
   ],
@@ -59,7 +68,9 @@ const routes : Routes = [
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [AtorService,
               ClasseService,

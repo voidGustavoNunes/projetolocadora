@@ -13,6 +13,6 @@ export class BaseComponent {
 
   onCancel(form: NgForm) {
     form.reset();
-    this.router.navigate(['/home']); // Redirecionar para a página principal
+    this.router.navigate(['/home']);
   }
 }

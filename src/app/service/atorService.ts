@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Ator } from "../modules/ator";
 import { map, Observable } from "rxjs";
+import { GenericService } from "./genericService";
+import { ID } from "@datorama/akita";
 
 
 @Injectable({
@@ -9,38 +11,40 @@ import { map, Observable } from "rxjs";
 })
 
 //traz os dados do backend
-export class AtorService {
+export class AtorService extends GenericService<Ator, ID>{
 
 
   // private baseUrl = "http://localhost:8080/home";
 
-  private atorUrl = "http://localhost:8080/atores";
+  protected override baseUrl = "http://localhost:8080/atores";
 
 
-  constructor(private httpClient: HttpClient) { }
-
-  getAtoresList(): Observable<Ator[]> {
-    return this.httpClient.get<Ator[]>(this.atorUrl).pipe(
-      map(response => response) // Aqui, apenas retorne a resposta, pois já é um array
-    );
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
-  getAtor(atorId: number): Observable<Ator>{
-    const atorUrl = `${this.atorUrl}/${atorId}`;
-    return this.httpClient.get<Ator>(atorUrl);
-  }
+  // getAtoresList(): Observable<Ator[]> {
+  //   return this.httpClient.get<Ator[]>(this.atorUrl).pipe(
+  //     map(response => response) // Aqui, apenas retorne a resposta, pois já é um array
+  //   );
+  // }
 
-  createAtor(ator: Ator): Observable<Ator> {
-    return this.httpClient.post<Ator>(this.atorUrl, ator);
-  }
+  // getAtor(atorId: number): Observable<Ator>{
+  //   const atorUrl = `${this.atorUrl}/${atorId}`;
+  //   return this.httpClient.get<Ator>(atorUrl);
+  // }
 
-  updateAtor(ator: Ator): Observable<Ator> {
-    return this.httpClient.put<Ator>(`${this.atorUrl}/${ator.id}`, ator);
-  }
+  // createAtor(ator: Ator): Observable<Ator> {
+  //   return this.httpClient.post<Ator>(this.atorUrl, ator);
+  // }
 
-  apagarAtor(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.atorUrl}/${id}`);
-  }
+  // updateAtor(ator: Ator): Observable<Ator> {
+  //   return this.httpClient.put<Ator>(`${this.atorUrl}/${ator.id}`, ator);
+  // }
+
+  // apagarAtor(id: number): Observable<void> {
+  //   return this.httpClient.delete<void>(`${this.atorUrl}/${id}`);
+  // }
 
 
 }

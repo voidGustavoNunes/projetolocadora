@@ -1,30 +1,26 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
   <a class="navbar-brand" href="/home">
     <img src="../../../assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     Locadora
   </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="dropdown-item" href="/cadastro-ator">Cadastrar Ator</a>
-        <div class="dropdown-divider"></div>
-        <!-- <app-ator></app-ator> -->
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="dropdown-item" href="/cadastro-classe">Cadastrar Classe</a>
-        <div class="dropdown-divider"></div>
-        <!-- <app-classe></app-classe> -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/cadastro-ator">Cadastrar Ator</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="dropdown-item" href="/cadastro-diretor">Cadastrar Diretor</a>
-        <div class="dropdown-divider"></div>
-        <!-- <app-diretor></app-diretor> -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/cadastro-classe">Cadastrar Classe</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/cadastro-diretor">Cadastrar Diretor</a>
       </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
   </div>
 </nav>

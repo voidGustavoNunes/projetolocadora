@@ -1,12 +1,11 @@
-export class Diretor {
-  public id: number; // Propriedade pública para id
-  public nome: string; // Propriedade pública para nome
+import { ID } from "@datorama/akita";
 
-  constructor(
-    id: number,
-    nome: string,
-  ) {
-    this.id = id; // Inicializa o id no construtor
-    this.nome = nome; // Inicializa o nome no construtor
+export class Diretor {
+  id: ID | undefined;
+  nome: string;
+
+  constructor(id: | undefined = undefined, nome: string = '') {
+    this.id = id;
+    this.nome = nome;
   }
 }

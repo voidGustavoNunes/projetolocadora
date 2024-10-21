@@ -21,7 +21,7 @@ export class AtorComponent implements OnInit{
 
 
   listAtores(){
-    this.atorService.getAtoresList().subscribe(
+    this.atorService.getList().subscribe(
       data => {
         console.log('Atores =' + JSON.stringify(data));
         this.atores = data;

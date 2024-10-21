@@ -21,7 +21,7 @@ export class ClasseComponent implements OnInit{
 
 
   listClasses(){
-    this.classeService.getClassesList().subscribe(
+    this.classeService.getList().subscribe(
       data => {
         console.log('Classes =' + JSON.stringify(data));
         this.classes = data;
