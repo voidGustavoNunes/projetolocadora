@@ -25,6 +25,7 @@ import { ItemComponent } from './components/listagem/item/item.component';
 import { CadastroItemComponent } from './components/cadastro/cadastro-item/cadastro-item.component';
 import { CadastroTituloComponent } from './components/cadastro/cadastro-titulo/cadastro-titulo.component';
 import { TituloComponent } from './components/listagem/titulo/titulo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
@@ -70,7 +71,8 @@ const routes : Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ReactiveFormsModule
   ],
   providers: [AtorService,
               ClasseService,
