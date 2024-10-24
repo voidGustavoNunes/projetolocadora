@@ -1,1 +1,10 @@
-<p>titulo works!</p>
+<li class="nav-titulo dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="titulosDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Titulos
+  </a>
+  <div class="dropdown-menu" aria-labelledby="titulosDropDown">
+    <a *ngFor="let titulo of titulos" class="dropdown-titulo" href="#">
+      {{ titulo.nome }}
+    </a>
+  </div>
+</li>

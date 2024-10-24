@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Classe } from "../modules/classe";
 import { Injectable } from "@angular/core";
-import { GenericService } from "./genericService";
+import { GenericService } from "../components/base/service/genericService";
 import { ID } from "@datorama/akita";
 
 

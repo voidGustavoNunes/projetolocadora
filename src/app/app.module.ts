@@ -13,7 +13,7 @@ import { CadastroAtorComponent } from './components/cadastro/cadastro-ator/cadas
 import { CadastroDiretorComponent } from './components/cadastro/cadastro-diretor/cadastro-diretor.component';
 import { CadastroClasseComponent } from './components/cadastro/cadastro-classe/cadastro-classe.component';
 import { FormsModule } from '@angular/forms';
-import { BaseComponent } from './components/base/base.component';
+import { BaseComponent } from './components/base/components/base.component';
 import { TabelaComponent } from './components/listagem/tabela/tabela.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AtorService } from './service/atorService';
@@ -26,11 +26,15 @@ import { CadastroItemComponent } from './components/cadastro/cadastro-item/cadas
 import { CadastroTituloComponent } from './components/cadastro/cadastro-titulo/cadastro-titulo.component';
 import { TituloComponent } from './components/listagem/titulo/titulo.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ItemService } from './service/itemService';
+import { TituloService } from './service/tituloService';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
   {path: 'cadastro-classe', component: CadastroClasseComponent },
   {path: 'cadastro-diretor', component: CadastroDiretorComponent },
+  {path: 'cadastro-item', component: CadastroItemComponent },
+  {path: 'cadastro-titulo', component: CadastroTituloComponent },
   {path: 'atores/:id', component: AtorComponent},
   {path: 'search/:keyword', component: SearchComponent},
   {path: 'classes/:id', component: ClasseComponent},
@@ -76,7 +80,9 @@ const routes : Routes = [
   ],
   providers: [AtorService,
               ClasseService,
-              DiretorService
+              DiretorService,
+              ItemService,
+              TituloService
   ],
   bootstrap: [AppComponent]
 })

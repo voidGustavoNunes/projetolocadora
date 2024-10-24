@@ -9,10 +9,8 @@ import { ClasseService } from 'src/app/service/classeService';
 })
 export class ClasseComponent implements OnInit{
 
-  constructor(
-    private classeService: ClasseService){
+  constructor(private classeService: ClasseService){}
 
-}
   ngOnInit(): void {
     this.listClasses();
   }

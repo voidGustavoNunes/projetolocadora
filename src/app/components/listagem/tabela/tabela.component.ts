@@ -3,11 +3,15 @@ import { Router } from '@angular/router';
 import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
 import { DiretorService } from 'src/app/service/diretorService';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 import { Ator } from 'src/app/modules/ator';
 import { Classe } from 'src/app/modules/classe';
 import { Diretor } from 'src/app/modules/diretor';
+import { ItemService } from 'src/app/service/itemService';
+import { TituloService } from 'src/app/service/tituloService';
+import { Item } from 'src/app/modules/item';
+import { Titulo } from 'src/app/modules/titulo';
 
 @Component({
   selector: 'app-tabela',
@@ -17,25 +21,26 @@ import { Diretor } from 'src/app/modules/diretor';
 export class TabelaComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
-  dataSourceAtores = new MatTableDataSource<Ator>();
-  dataSourceClasses = new MatTableDataSource<Classe>();
-  dataSourceDiretores = new MatTableDataSource<Diretor>();
-
   filtroSelecionado: string = 'atores';
-  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor>();
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo>();
 
   atores: any[] = [];
   classes: any[] = [];
   diretores: any[] = [];
+  titulos: any[] = [];
+  itens: any[] = [];
+
 
   displayedColumns: string[] = [];
 
 
   constructor(
-    private atorService: AtorService,
-    private classeService: ClasseService,
-    private diretorService: DiretorService,
-    private router: Router
+    private readonly atorService: AtorService,
+    private readonly classeService: ClasseService,
+    private readonly diretorService: DiretorService,
+    private readonly itemService: ItemService,
+    private readonly tituloService: TituloService,
+    private readonly router: Router
   ) {}
 
 
@@ -52,6 +57,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.carregarAtores();
     this.carregarClasses();
     this.carregarDiretores();
+    this.carregarItens();
+    this.carregarTitulos();
   }
 
 
@@ -65,6 +72,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     } else if (this.filtroSelecionado === 'diretores') {
       this.itensFiltrados.data = this.diretores;
       this.displayedColumns = ['nome'];
+    }else if (this.filtroSelecionado === 'itens') {
+      this.itensFiltrados.data = this.itens;
+      this.displayedColumns = ['numeroSerie', 'dataAquisicao', 'tipo'];
+    }else if (this.filtroSelecionado === 'títulos') {
+      this.itensFiltrados.data = this.titulos;
+      this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria'];
     }
 
     if (this.paginator) {
@@ -103,7 +116,26 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     );
   }
 
-  // Editar item
+  carregarItens(): void {
+    this.itemService.getList().subscribe(
+      data => {
+        this.itens = data;
+        this.filtrarDados();
+      },
+      error => console.error('Erro ao carregar itens', error)
+    );
+  }
+  carregarTitulos() {
+    this.tituloService.getList().subscribe(
+      data => {
+        this.titulos = data;
+        this.filtrarDados();
+      },
+      error => console.error('Erro ao carregar títulos', error)
+    );
+  }
+
+
   editarItem(item: any): void {
     if (this.filtroSelecionado === 'atores') {
       console.log('Editar Ator', item);
@@ -114,6 +146,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     } else if (this.filtroSelecionado === 'diretores') {
       console.log('Editar Diretor', item);
       this.router.navigate(['/cadastro-diretor'], { state: { item } });
+    }else if (this.filtroSelecionado === 'itens') {
+      console.log('Editar Item', item);
+      this.router.navigate(['/cadastro-item'], { state: { item } });
+    }else if (this.filtroSelecionado === 'títulos') {
+      console.log('Editar Título', item);
+      this.router.navigate(['/cadastro-titulo'], { state: { item } });
     }
   }
 
@@ -147,6 +185,26 @@ export class TabelaComponent implements OnInit, AfterViewInit {
             console.log('Diretor apagado com sucesso.');
           },
           error => console.error('Erro ao apagar diretor', error)
+        );
+      }
+      else if (this.filtroSelecionado === 'itens') {
+        this.itemService.delete(item.id).subscribe(
+          () => {
+            this.carregarItens();
+            this.filtrarDados();
+            console.log('Item apagado com sucesso.');
+          },
+          error => console.error('Erro ao apagar item', error)
+        );
+      }
+      else if (this.filtroSelecionado === 'títulos') {
+        this.tituloService.delete(item.id).subscribe(
+          () => {
+            this.carregarTitulos();
+            this.filtrarDados();
+            console.log('Título apagado com sucesso.');
+          },
+          error => console.error('Erro ao apagar título', error)
         );
       }
     }

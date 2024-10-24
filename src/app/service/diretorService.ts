@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { Observable, map } from "rxjs";
 import { Diretor } from "../modules/diretor";
 import { Injectable } from "@angular/core";
-import { GenericService } from "./genericService";
+import { GenericService } from "../components/base/service/genericService";
 import { ID } from "@datorama/akita";
 
 
