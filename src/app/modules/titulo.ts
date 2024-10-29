@@ -6,17 +6,18 @@ import { Diretor } from "./diretor";
 export class Titulo {
   id: ID | undefined;
   nome: string | undefined;
-  atores: Ator[] | undefined;
+  atores: Ator[];
   diretor: Diretor | undefined;
   ano: number | undefined;
   sinopse: string | undefined;
   categoria: string | undefined;
   classe: Classe | undefined;
+  selecionado: boolean = false;
 
   constructor(
     id: ID | undefined = undefined,
     nome?: string,
-    atores?: Ator[],
+    atores: Ator[] = [],
     diretor?: Diretor,
     ano?: number,
     sinopse?: string,

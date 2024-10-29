@@ -1,0 +1,40 @@
+.container-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.form-container {
+  width: 50%;
+}
+
+.input-small {
+  width: 30%;
+}
+
+.input-medium {
+  width: 50%;
+}
+
+.input-large {
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.table-centered {
+  width: 80%;
+  margin-top: 30px;
+}
+
+
+
+h2 {
+  font-size: 2rem;
+  color: #2b6cb0;
+}

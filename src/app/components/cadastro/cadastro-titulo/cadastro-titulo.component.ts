@@ -23,6 +23,8 @@ export class CadastroTituloComponent implements OnInit{
 
   constructor(httpClient: HttpClient, private router: Router, private tituloService: TituloService, private atorService: AtorService, private diretorService: DiretorService, private classeService: ClasseService){
     this.titulo = new Titulo();
+    this.titulo.atores = [];
+
   }
 
   ngOnInit(): void {
@@ -34,9 +36,10 @@ export class CadastroTituloComponent implements OnInit{
   listarAtores() {
     this.atorService.getList().subscribe(data => {
       this.atores = data;
+      // Inicializa cada ator com a propriedade 'selecionado' como false
+      this.atores = data.map(ator => ({ ...ator, selecionado: false }));
     });
   }
-
   listarDiretores() {
     this.diretorService.getList().subscribe(data => {
       this.diretores = data;
@@ -61,6 +64,14 @@ export class CadastroTituloComponent implements OnInit{
     }
   }
 
+  toggleAtor(ator: Ator): void {
+    ator.selecionado = !ator.selecionado;
+    if (ator.selecionado) {
+      this.titulo.atores.push(ator);
+    } else {
+      this.titulo.atores = this.titulo.atores.filter(a => a.id !== ator.id);
+    }
+  }
 
 
 }

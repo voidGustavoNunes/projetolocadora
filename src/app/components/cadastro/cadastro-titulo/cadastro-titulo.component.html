@@ -1,8 +1,7 @@
-<div class="container">
+<div class="container form-container">
   <h2>{{ titulo.id ? 'Editar Título' : 'Cadastrar Título' }}</h2>
 
   <form (ngSubmit)="salvar()" #tituloForm="ngForm">
-
 
     <div class="form-group">
       <label for="nome">Nome do Título</label>
@@ -13,23 +12,34 @@
     </div>
 
     <div class="form-group">
-      <label for="atores">Atores</label>
-      <select multiple id="atores" class="form-control" name="atores" required>
-        <option *ngFor="let ator of atores" [value]="ator">{{ ator.nome }}</option>
-      </select>
-    </div>
-
-
-    <div class="form-group">
-      <label for="diretor">Diretor</label>
-      <select id="diretor" class="form-control" [(ngModel)]="titulo.diretor" name="diretor" required #diretor="ngModel">
-        <option *ngFor="let diretor of diretores" [value]="diretor">{{ diretor.nome }}</option>
-      </select>
-      <div *ngIf="diretor.invalid && diretor.touched" class="text-danger">
-        O diretor é obrigatório.
+      <label>Atores</label>
+      <ng-container *ngIf="atores.length > 0">
+        <div *ngFor="let ator of atores" class="form-check">
+          <input type="checkbox" [id]="'ator-' + ator.id" class="form-check-input"
+                 [(ngModel)]="ator.selecionado" name="atores"
+                 (change)="toggleAtor(ator)">
+          <label [for]="'ator-' + ator.id" class="form-check-label">{{ ator.nome }}</label>
+        </div>
+      </ng-container>
+      <div *ngIf="atores.length === 0" class="text-danger">
+        Não há atores disponíveis.
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="diretor">Diretor</label>
+      <ng-container *ngIf="diretores.length > 0">
+        <select id="diretor" class="form-control" [(ngModel)]="titulo.diretor" name="diretor" required #diretor="ngModel">
+          <option *ngFor="let diretor of diretores" [value]="diretor">{{ diretor.nome }}</option>
+        </select>
+        <div *ngIf="diretor.invalid && diretor.touched" class="text-danger">
+          O diretor é obrigatório.
+        </div>
+      </ng-container>
+      <div *ngIf="diretores.length === 0" class="text-danger">
+        Não há diretores disponíveis.
+      </div>
+    </div>
 
     <div class="form-group">
       <label for="ano">Ano de Lançamento</label>
@@ -39,7 +49,6 @@
       </div>
     </div>
 
-
     <div class="form-group">
       <label for="sinopse">Sinopse</label>
       <textarea id="sinopse" class="form-control" rows="5" [(ngModel)]="titulo.sinopse" name="sinopse" required #sinopse="ngModel"></textarea>
@@ -47,7 +56,6 @@
         A sinopse é obrigatória.
       </div>
     </div>
-
 
     <div class="form-group">
       <label for="categoria">Categoria</label>
@@ -59,11 +67,16 @@
 
     <div class="form-group">
       <label for="classe">Classe</label>
-      <select id="classe" class="form-control" [(ngModel)]="titulo.classe" name="classe" required #classe="ngModel">
-        <option *ngFor="let classe of classes" [value]="classe">{{ classe.nome }}</option>
-      </select>
-      <div *ngIf="classe.invalid && classe.touched" class="text-danger">
-        A classe é obrigatória.
+      <ng-container *ngIf="classes.length > 0">
+        <select id="classe" class="form-control" [(ngModel)]="titulo.classe" name="classe" required #classe="ngModel">
+          <option *ngFor="let classe of classes" [value]="classe">{{ classe.nome }}</option>
+        </select>
+        <div *ngIf="classe.invalid && classe.touched" class="text-danger">
+          A classe é obrigatória.
+        </div>
+      </ng-container>
+      <div *ngIf="classes.length === 0" class="text-danger">
+        Não há classes disponíveis.
       </div>
     </div>
 

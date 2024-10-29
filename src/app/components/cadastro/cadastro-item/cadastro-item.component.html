@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container form-container">
   <h2>{{ item.id ? 'Editar Item' : 'Cadastrar Item' }}</h2>
 
-  <form (ngSubmit)="salvar()" #numeroSerieForm="ngForm">
+  <form (ngSubmit)="salvar()" #itemForm="ngForm">
     <div class="form-group">
       <label for="numeroSerie">Número de Série:</label>
       <input type="number" id="numeroSerie" class="form-control" [(ngModel)]="item.numeroSerie" name="numeroSerie" required #numeroSerie="ngModel">
@@ -11,12 +11,23 @@
     </div>
     <div class="form-group">
       <label for="titulo">Título</label>
-      <select id="titulo" class="form-control" [(ngModel)]="item.titulo" name="titulo" required #titulo="ngModel">
-        <option *ngFor="let titulo of titulos" [value]="titulo">{{ titulo.nome }}</option>
-      </select>
-      <div *ngIf="titulo.invalid && titulo.touched" class="text-danger">
-        O título é obrigatório.
+      <div *ngIf="titulos.length === 0" class="text-danger">
+        Não há títulos cadastrados.
       </div>
+
+      <ng-container *ngIf="titulos.length > 0">
+        <select id="titulo" class="form-control"
+                [(ngModel)]="item.titulo"
+                name="titulo"
+                required
+                #titulo="ngModel">
+          <option *ngFor="let titulo of titulos" [value]="titulo">{{ titulo.nome }}</option>
+        </select>
+
+        <div *ngIf="titulo.invalid && titulo.touched" class="text-danger">
+          O título é obrigatório.
+        </div>
+      </ng-container>
     </div>
     <div class="form-group">
       <label for="dataAquisicao">Data de Aquisição</label>
@@ -34,7 +45,6 @@
         O tipo é obrigatório.
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="numeroSerieForm.invalid">Salvar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid || !itemForm.dirty">Salvar</button>
   </form>
 </div>
-

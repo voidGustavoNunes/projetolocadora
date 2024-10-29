@@ -1,14 +1,31 @@
-<div class="container">
+<div class="container form-container">
   <h2>{{ ator.id ? 'Editar Ator' : 'Cadastrar Ator' }}</h2>
-
   <form (ngSubmit)="salvar()" #atorForm="ngForm">
     <div class="form-group">
       <label for="nome">Nome:</label>
-      <input type="text" id="nome" class="form-control" [(ngModel)]="ator.nome" name="nome" required #nome="ngModel">
+      <input type="text" id="nome" class="form-control input-large" [(ngModel)]="ator.nome" name="nome" required #nome="ngModel">
       <div *ngIf="nome.invalid && nome.touched" class="text-danger">
         O nome do ator é obrigatório.
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="atorForm.invalid">Salvar</button>
+
+    <div class="form-group">
+      <label>Títulos</label>
+      <ng-container *ngIf="titulos.length > 0">
+        <div *ngFor="let titulo of titulos" class="form-check">
+          <input type="checkbox" [id]="'titulo-' + titulo.id" class="form-check-input"
+                 [(ngModel)]="titulo.selecionado" name="titulos"
+                 (change)="toggleTitulo(titulo, $event)">
+          <label [for]="'titulo-' + titulo.id" class="form-check-label">{{ titulo.nome }}</label>
+        </div>
+      </ng-container>
+      <div *ngIf="titulos.length === 0" class="text-danger">
+        Não há títulos cadastrados.
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="atorForm.invalid">Salvar</button>
+    </div>
   </form>
 </div>

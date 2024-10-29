@@ -28,6 +28,7 @@ import { TituloComponent } from './components/listagem/titulo/titulo.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemService } from './service/itemService';
 import { TituloService } from './service/tituloService';
+import { HomeComponent } from './components/home/home.component';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
@@ -42,6 +43,8 @@ const routes : Routes = [
   {path: 'diretores', component: DiretorComponent},
   {path: 'atores', component: AtorComponent},
   {path: 'classes', component: ClasseComponent},
+  {path: 'home', component: HomeComponent},
+  { path: 'tabela', component: TabelaComponent },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home', pathMatch: 'full'},
 
@@ -65,6 +68,7 @@ const routes : Routes = [
     CadastroItemComponent,
     CadastroTituloComponent,
     TituloComponent,
+    HomeComponent,
 
 
   ],
@@ -82,7 +86,8 @@ const routes : Routes = [
               ClasseService,
               DiretorService,
               ItemService,
-              TituloService
+              TituloService,
+              HomeComponent,
   ],
   bootstrap: [AppComponent]
 })
