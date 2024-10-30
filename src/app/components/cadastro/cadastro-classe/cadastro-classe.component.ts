@@ -38,4 +38,9 @@ export class CadastroClasseComponent implements OnInit {
       });
     }
   }
+
+  cancelar(): void {
+    this.classe = new Classe(undefined, '', 0, new Date());
+    this.router.navigate(['/home']);
+  }
 }

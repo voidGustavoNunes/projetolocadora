@@ -8,9 +8,9 @@ export class Classe {
 
   constructor(
     id: | undefined = undefined,
-    nome: string,
-    valor: number,
-    dataDevolucao: Date,
+    nome: string = '',
+    valor: number = 0,
+    dataDevolucao: Date = new Date(),
   ) {
     this.id = id;
     this.nome = nome;

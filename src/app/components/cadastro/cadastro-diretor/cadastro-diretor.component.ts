@@ -37,4 +37,9 @@ export class CadastroDiretorComponent implements OnInit {
       });
     }
   }
+
+  cancelar(): void {
+    this.diretor = new Diretor(undefined, '');
+    this.router.navigate(['/home']);
+  }
 }

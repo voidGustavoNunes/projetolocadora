@@ -50,7 +50,10 @@ export class CadastroItemComponent implements OnInit{
     }
   }
 
-
+  cancelar(): void {
+    this.item = new Item(undefined, 0, new Date, new Titulo, Tipo.BLUERAY);
+    this.router.navigate(['/home']);
+  }
 
 
 

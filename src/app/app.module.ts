@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ItemService } from './service/itemService';
 import { TituloService } from './service/tituloService';
 import { HomeComponent } from './components/home/home.component';
+import { ToastrModule } from 'ngx-toastr';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
@@ -80,7 +81,9 @@ const routes : Routes = [
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+
   ],
   providers: [AtorService,
               ClasseService,

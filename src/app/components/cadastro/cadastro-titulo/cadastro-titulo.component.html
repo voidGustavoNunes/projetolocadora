@@ -29,10 +29,10 @@
     <div class="form-group">
       <label for="diretor">Diretor</label>
       <ng-container *ngIf="diretores.length > 0">
-        <select id="diretor" class="form-control" [(ngModel)]="titulo.diretor" name="diretor" required #diretor="ngModel">
-          <option *ngFor="let diretor of diretores" [value]="diretor">{{ diretor.nome }}</option>
+        <select id="diretor" class="form-control" [(ngModel)]="diretor" name="diretor" required #diretorControl="ngModel">
+          <option *ngFor="let d of diretores" [ngValue]="d">{{ d.nome }}</option>
         </select>
-        <div *ngIf="diretor.invalid && diretor.touched" class="text-danger">
+        <div *ngIf="diretorControl.invalid && diretorControl.touched" class="text-danger">
           O diretor é obrigatório.
         </div>
       </ng-container>
@@ -68,10 +68,10 @@
     <div class="form-group">
       <label for="classe">Classe</label>
       <ng-container *ngIf="classes.length > 0">
-        <select id="classe" class="form-control" [(ngModel)]="titulo.classe" name="classe" required #classe="ngModel">
-          <option *ngFor="let classe of classes" [value]="classe">{{ classe.nome }}</option>
+        <select id="classe" class="form-control" [(ngModel)]="classe" name="classe" required #classeControl="ngModel">
+          <option *ngFor="let c of classes" [ngValue]="c">{{ c.nome }}</option>
         </select>
-        <div *ngIf="classe.invalid && classe.touched" class="text-danger">
+        <div *ngIf="classeControl.invalid && classeControl.touched" class="text-danger">
           A classe é obrigatória.
         </div>
       </ng-container>
@@ -80,7 +80,9 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="tituloForm.invalid">Salvar</button>
-
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="tituloForm.invalid">Salvar</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>
