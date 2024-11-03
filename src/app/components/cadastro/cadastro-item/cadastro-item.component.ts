@@ -23,6 +23,8 @@ export class CadastroItemComponent implements OnInit{
   ngOnInit(): void {
     if (history.state.item) {
       this.item = history.state.item;
+
+    
     }
     this.listTitulos();
   }

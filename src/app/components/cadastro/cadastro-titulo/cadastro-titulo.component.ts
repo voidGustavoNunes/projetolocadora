@@ -29,6 +29,10 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if (history.state.item) {
+      this.titulo = history.state.item;
+      console.log(this.titulo);
+    }
     this.listarAtores();
     this.listarDiretores();
     this.listarClasses();

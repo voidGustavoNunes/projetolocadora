@@ -65,19 +65,19 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   filtrarDados(): void {
     if (this.filtroSelecionado === 'atores') {
       this.itensFiltrados.data = this.atores;
-      this.displayedColumns = ['nome'];
+      this.displayedColumns = ['nome', 'acoes'];
     } else if (this.filtroSelecionado === 'classes') {
       this.itensFiltrados.data = this.classes;
-      this.displayedColumns = ['nome', 'valor', 'dataDevolucao'];
+      this.displayedColumns = ['nome', 'valor', 'dataDevolucao', 'acoes'];
     } else if (this.filtroSelecionado === 'diretores') {
       this.itensFiltrados.data = this.diretores;
-      this.displayedColumns = ['nome'];
-    }else if (this.filtroSelecionado === 'itens') {
+      this.displayedColumns = ['nome', 'acoes'];
+    } else if (this.filtroSelecionado === 'itens') {
       this.itensFiltrados.data = this.itens;
-      this.displayedColumns = ['numeroSerie', 'dataAquisicao', 'tipo'];
-    }else if (this.filtroSelecionado === 'títulos') {
+      this.displayedColumns = ['numeroSerie', 'dataAquisicao', 'tipo', 'acoes'];
+    } else if (this.filtroSelecionado === 'títulos') {
       this.itensFiltrados.data = this.titulos;
-      this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria'];
+      this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria', 'acoes'];
     }
 
     if (this.paginator) {
@@ -137,21 +137,28 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
 
   editarItem(item: any): void {
-    if (this.filtroSelecionado === 'atores') {
-      console.log('Editar Ator', item);
-      this.router.navigate(['/cadastro-ator'], { state: { item } });
-    } else if (this.filtroSelecionado === 'classes') {
-      console.log('Editar Classe', item);
-      this.router.navigate(['/cadastro-classe'], { state: { item } });
-    } else if (this.filtroSelecionado === 'diretores') {
-      console.log('Editar Diretor', item);
-      this.router.navigate(['/cadastro-diretor'], { state: { item } });
-    }else if (this.filtroSelecionado === 'itens') {
-      console.log('Editar Item', item);
-      this.router.navigate(['/cadastro-item'], { state: { item } });
-    }else if (this.filtroSelecionado === 'títulos') {
-      console.log('Editar Título', item);
-      this.router.navigate(['/cadastro-titulo'], { state: { item } });
+    let rotaCadastro = '';
+
+    switch (this.filtroSelecionado) {
+      case 'atores':
+        rotaCadastro = '/cadastro-ator';
+        break;
+      case 'classes':
+        rotaCadastro = '/cadastro-classe';
+        break;
+      case 'diretores':
+        rotaCadastro = '/cadastro-diretor';
+        break;
+      case 'itens':
+        rotaCadastro = '/cadastro-item';
+        break;
+      case 'títulos':
+        rotaCadastro = '/cadastro-titulo';
+        break;
+    }
+
+    if (rotaCadastro) {
+      this.router.navigate([rotaCadastro], { state: { item } });
     }
   }
 
