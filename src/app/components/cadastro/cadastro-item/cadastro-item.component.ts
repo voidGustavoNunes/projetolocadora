@@ -17,7 +17,7 @@ export class CadastroItemComponent implements OnInit{
   tipos = Object.values(Tipo);
 
   constructor(private itemService: ItemService, private router: Router, private tituloService: TituloService) {
-    this.item = new Item(undefined, 0, new Date, new Titulo, Tipo.BLUERAY); // Inicializa o nome com uma string vazia, e o id com 0
+    this.item = new Item(undefined, 0, new Date, undefined, Tipo.BLUERAY); // Inicializa o nome com uma string vazia, e o id com 0
   }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class CadastroItemComponent implements OnInit{
   }
 
   salvar(): void {
-    if (this.item.titulo === null) {
+    if (!this.item.tituloId) {
       alert('É obrigatório selecionar um título.');
       return;
     }
@@ -51,7 +51,7 @@ export class CadastroItemComponent implements OnInit{
   }
 
   cancelar(): void {
-    this.item = new Item(undefined, 0, new Date, new Titulo, Tipo.BLUERAY);
+    this.item = new Item(undefined, 0, new Date, undefined, Tipo.BLUERAY);
     this.router.navigate(['/home']);
   }
 

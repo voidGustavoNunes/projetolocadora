@@ -6,15 +6,15 @@ export class Item {
   id: ID | undefined;
   numeroSerie: number | undefined;
   dataAquisicao: Date | undefined;
-  titulo?: Titulo;
+  public tituloId?: number | undefined;
   tipo: Tipo | undefined;
 
 
-  constructor(id: ID | undefined = undefined, numeroSerie?: number, dataAquisicao?: Date, titulo?: Titulo, tipo?: Tipo) {
+  constructor(id: ID | undefined = undefined, numeroSerie?: number, dataAquisicao?: Date, tituloId?: number, tipo?: Tipo) {
     this.id = id;
     this.numeroSerie = numeroSerie;
     this.dataAquisicao = dataAquisicao;
-    this.titulo = titulo;
+    this.tituloId = tituloId;
     this.tipo = tipo;
 
   }

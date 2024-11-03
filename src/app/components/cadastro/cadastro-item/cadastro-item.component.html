@@ -17,11 +17,11 @@
 
       <ng-container *ngIf="titulos.length > 0">
         <select id="titulo" class="form-control"
-                [(ngModel)]="item.titulo"
+                [(ngModel)]="item.tituloId"
                 name="titulo"
                 required
                 #titulo="ngModel">
-          <option *ngFor="let titulo of titulos" [value]="titulo">{{ titulo.nome }}</option>
+          <option *ngFor="let titulo of titulos" [value]="titulo.id">{{ titulo.nome }}</option>
         </select>
 
         <div *ngIf="titulo.invalid && titulo.touched" class="text-danger">

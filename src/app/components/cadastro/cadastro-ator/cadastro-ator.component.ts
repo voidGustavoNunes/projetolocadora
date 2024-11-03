@@ -15,15 +15,12 @@ export class CadastroAtorComponent implements OnInit {
   titulos: Titulo[] = [];
 
   constructor(private atorService: AtorService, private router: Router, private tituloService: TituloService) {
-    this.ator = new Ator(undefined, '', []);
+    this.ator = new Ator(undefined, '');
   }
 
   ngOnInit(): void {
-    this.carregarTitulos();
     if (history.state.item) {
       this.ator = history.state.item;
-      // Atribui os títulos do ator carregado
-      this.atribuirTitulosSelecionados();
     }
   }
 
@@ -44,32 +41,6 @@ export class CadastroAtorComponent implements OnInit {
     }
   }
 
-  carregarTitulos(): void {
-    this.tituloService.getList().subscribe(data => {
-      this.titulos = data.map(titulo => ({ ...titulo, selecionado: false }));
-    });
-  }
-
-  // Novo método para atribuir títulos selecionados
-  atribuirTitulosSelecionados(): void {
-    if (this.ator.titulos) {
-      this.ator.titulos.forEach(titulo => {
-        const tituloEncontrado = this.titulos.find(t => t.id === titulo.id);
-        if (tituloEncontrado) {
-          tituloEncontrado.selecionado = true; // Marca o título como selecionado
-        }
-      });
-    }
-  }
-
-  toggleTitulo(titulo: Titulo, event: Event): void {
-    const checked = (event.target as HTMLInputElement).checked;
-    if (checked) {
-      this.ator.titulos.push(titulo);
-    } else {
-      this.ator.titulos = this.ator.titulos.filter(t => t.id !== titulo.id);
-    }
-  }
 
   cancelar(): void {
     this.ator = new Ator(undefined, '', []);
