@@ -1,13 +1,28 @@
-<div class="container form-container">
+<div class="container form-container mt-5">
   <h2>{{ titulo.id ? 'Editar Título' : 'Cadastrar Título' }}</h2>
 
-  <form (ngSubmit)="salvar()" #tituloForm="ngForm">
+  <form (ngSubmit)="salvar()" #tituloForm="ngForm" class="row">
 
-    <div class="form-group">
+    <div class="form-group col-sm-6">
       <label for="nome">Nome do Título</label>
       <input type="text" id="nome" class="form-control" [(ngModel)]="titulo.nome" name="nome" required #nome="ngModel">
       <div *ngIf="nome.invalid && nome.touched" class="text-danger">
         O nome é obrigatório.
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <label for="diretor">Diretor</label>
+      <ng-container *ngIf="diretores.length > 0">
+        <select id="diretor" class="form-control" [(ngModel)]="diretor" name="diretor" required #diretorControl="ngModel">
+          <option *ngFor="let d of diretores" [ngValue]="d">{{ d.nome }}</option>
+        </select>
+        <div *ngIf="diretorControl.invalid && diretorControl.touched" class="text-danger">
+          O diretor é obrigatório.
+        </div>
+      </ng-container>
+      <div *ngIf="diretores.length === 0" class="text-danger">
+        Não há diretores disponíveis.
       </div>
     </div>
 
@@ -26,22 +41,9 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="diretor">Diretor</label>
-      <ng-container *ngIf="diretores.length > 0">
-        <select id="diretor" class="form-control" [(ngModel)]="diretor" name="diretor" required #diretorControl="ngModel">
-          <option *ngFor="let d of diretores" [ngValue]="d">{{ d.nome }}</option>
-        </select>
-        <div *ngIf="diretorControl.invalid && diretorControl.touched" class="text-danger">
-          O diretor é obrigatório.
-        </div>
-      </ng-container>
-      <div *ngIf="diretores.length === 0" class="text-danger">
-        Não há diretores disponíveis.
-      </div>
-    </div>
+    
 
-    <div class="form-group">
+    <div class="form-group col-sm-4">
       <label for="ano">Ano de Lançamento</label>
       <input type="number" id="ano" class="form-control" [(ngModel)]="titulo.ano" name="ano" required #ano="ngModel">
       <div *ngIf="ano.invalid && ano.touched" class="text-danger">
@@ -49,15 +51,7 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="sinopse">Sinopse</label>
-      <textarea id="sinopse" class="form-control" rows="5" [(ngModel)]="titulo.sinopse" name="sinopse" required #sinopse="ngModel"></textarea>
-      <div *ngIf="sinopse.invalid && sinopse.touched" class="text-danger">
-        A sinopse é obrigatória.
-      </div>
-    </div>
-
-    <div class="form-group">
+    <div class="form-group col-sm-4">
       <label for="categoria">Categoria</label>
       <input type="text" id="categoria" class="form-control" [(ngModel)]="titulo.categoria" name="categoria" required #categoria="ngModel">
       <div *ngIf="categoria.invalid && categoria.touched" class="text-danger">
@@ -65,7 +59,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group col-sm-4">
       <label for="classe">Classe</label>
       <ng-container *ngIf="classes.length > 0">
         <select id="classe" class="form-control" [(ngModel)]="classe" name="classe" required #classeControl="ngModel">
@@ -79,10 +73,18 @@
         Não há classes disponíveis.
       </div>
     </div>
+    
+    <div class="form-group">
+      <label for="sinopse">Sinopse</label>
+      <textarea id="sinopse" class="form-control" rows="5" [(ngModel)]="titulo.sinopse" name="sinopse" required #sinopse="ngModel"></textarea>
+      <div *ngIf="sinopse.invalid && sinopse.touched" class="text-danger">
+        A sinopse é obrigatória.
+      </div>
+    </div>
 
-    <div class="button-group">
-      <button type="submit" class="btn btn-primary" [disabled]="tituloForm.invalid">Salvar</button>
+    <div class="d-flex justify-content-end mt-3 gap-2 mb-5">
       <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="btn btn-success" [disabled]="tituloForm.invalid">Salvar</button>
     </div>
   </form>
 </div>
