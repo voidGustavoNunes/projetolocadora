@@ -9,6 +9,7 @@ import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
 import { DiretorService } from 'src/app/service/diretorService';
 import { TituloService } from '../../../service/tituloService';
+import { ID } from '@datorama/akita';
 
 @Component({
   selector: 'app-cadastro-titulo',
@@ -23,6 +24,11 @@ export class CadastroTituloComponent implements OnInit{
   classe = new Classe();
   diretor = new Diretor();
 
+
+
+  diretorId: ID | undefined;
+  classeId: ID | undefined;
+
   constructor(httpClient: HttpClient, private router: Router, private tituloService: TituloService, private atorService: AtorService, private diretorService: DiretorService, private classeService: ClasseService){
     this.titulo = new Titulo();
     this.titulo.atores = [];
@@ -31,18 +37,23 @@ export class CadastroTituloComponent implements OnInit{
   ngOnInit(): void {
     if (history.state.item) {
       this.titulo = history.state.item;
-      console.log(this.titulo);
+      this.diretorId = this.titulo.diretor?.id;
+      this.classeId = this.titulo.classe?.id;
     }
     this.listarAtores();
     this.listarDiretores();
     this.listarClasses();
+
+
   }
 
   listarAtores() {
     this.atorService.getList().subscribe(data => {
-      this.atores = data;
-
-      this.atores = data.map(ator => ({ ...ator, selecionado: false }));
+      this.atores = data.map(ator => ({
+        ...ator,
+        selecionado: this.titulo.atores.some(a => a.id === ator.id)
+      }));
+      console.log(this.atores)
     });
   }
   listarDiretores() {
@@ -58,12 +69,15 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   salvar(): void {
-
-    this.titulo.classe = this.classe;
-    this.titulo.diretor = this.diretor;
+    if (this.diretorId) {
+      this.titulo.diretor = this.diretores.find(d => d.id === this.diretorId);
+    }
+    if (this.classeId) {
+      this.titulo.classe = this.classes.find(c => c.id === this.classeId);
+    }
 
     if (this.titulo.id) {
-      this.tituloService.update(this.titulo.id ,this.titulo).subscribe(() => {
+      this.tituloService.update(this.titulo.id, this.titulo).subscribe(() => {
         this.router.navigate(['/tabela-titulos']);
       });
     } else {

@@ -1,6 +1,5 @@
 import { ID } from "@datorama/akita";
 import { Tipo } from "./enums/tipo";
-import { Titulo } from "./titulo";
 
 export class Item {
   id: ID | undefined;
@@ -10,7 +9,7 @@ export class Item {
   tipo: Tipo | undefined;
 
 
-  constructor(id: ID | undefined = undefined, numeroSerie?: number, dataAquisicao?: Date, tituloId?: number, tipo?: Tipo) {
+  constructor(id: | undefined = undefined, numeroSerie?: number, dataAquisicao?: Date, tituloId?: number, tipo?: Tipo) {
     this.id = id;
     this.numeroSerie = numeroSerie;
     this.dataAquisicao = dataAquisicao;

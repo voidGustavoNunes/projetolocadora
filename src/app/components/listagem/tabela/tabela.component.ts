@@ -142,6 +142,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     switch (this.filtroSelecionado) {
       case 'atores':
         rotaCadastro = '/cadastro-ator';
+        
         break;
       case 'classes':
         rotaCadastro = '/cadastro-classe';
@@ -150,6 +151,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
         rotaCadastro = '/cadastro-diretor';
         break;
       case 'itens':
+
+        console.log(item.id);
         rotaCadastro = '/cadastro-item';
         break;
       case 'títulos':
@@ -164,8 +167,17 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
 
   apagarItem(item: any): void {
-    const confirmacao = confirm(`Tem certeza que deseja apagar ${item.nome}?`);
+    let confirmacao = null;
+    if(this.filtroSelecionado !== 'itens'){
+      confirmacao = confirm(`Tem certeza que deseja apagar ${item.nome}?`);
+    }else{
+      confirmacao = confirm(`Tem certeza que deseja apagar ${item.numeroSerie}?`);
+    }
     if (confirmacao) {
+      if (!item.id) {
+        console.error('O item não possui um ID. Não é possível excluir.');
+        return;
+      }
       if (this.filtroSelecionado === 'atores') {
         this.atorService.delete(item.id).subscribe(
           () => {

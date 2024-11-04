@@ -24,7 +24,7 @@ export class CadastroItemComponent implements OnInit{
     if (history.state.item) {
       this.item = history.state.item;
 
-    
+
     }
     this.listTitulos();
   }
