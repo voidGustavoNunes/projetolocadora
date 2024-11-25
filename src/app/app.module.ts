@@ -30,16 +30,21 @@ import { ItemService } from './service/itemService';
 import { TituloService } from './service/tituloService';
 import { HomeComponent } from './components/home/home.component';
 import { ToastrModule } from 'ngx-toastr';
+import { CadastroClienteComponent } from './components/cadastro/cadastro-cliente/cadastro-cliente.component';
+import { CadastroDependenteComponent } from './components/cadastro/cadastro-dependente/cadastro-dependente.component';
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
+  {path: 'cadastro-dependente', component: CadastroDependenteComponent },
   {path: 'cadastro-classe', component: CadastroClasseComponent },
   {path: 'cadastro-diretor', component: CadastroDiretorComponent },
   {path: 'cadastro-item', component: CadastroItemComponent },
   {path: 'cadastro-titulo', component: CadastroTituloComponent },
+  {path: 'cadastro-cliente', component: CadastroClienteComponent },
   {path: 'atores/:id', component: AtorComponent},
   {path: 'search/:keyword', component: SearchComponent},
   {path: 'classes/:id', component: ClasseComponent},
+
   {path: 'diretores/:id', component: DiretorComponent},
   {path: 'diretores', component: DiretorComponent},
   {path: 'atores', component: AtorComponent},
@@ -48,6 +53,7 @@ const routes : Routes = [
   { path: 'tabela', component: TabelaComponent },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home', pathMatch: 'full'},
+
 
 ];
 
@@ -70,7 +76,9 @@ const routes : Routes = [
     CadastroTituloComponent,
     TituloComponent,
     HomeComponent,
-
+    CadastroClienteComponent,
+    CadastroClienteComponent,
+    CadastroDependenteComponent,
 
   ],
   imports: [

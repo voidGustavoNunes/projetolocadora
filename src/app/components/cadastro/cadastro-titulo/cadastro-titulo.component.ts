@@ -88,13 +88,13 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   toggleAtor(ator: Ator): void {
-    // ator.selecionado = !ator.selecionado;
+    ator.selecionado = !ator.selecionado;
     if (ator.selecionado) {
       this.titulo.atores.push(ator);
     } else {
       this.titulo.atores = this.titulo.atores.filter(a => a.id !== ator.id);
     }
-}
+  }
 
   cancelar(): void {
     this.titulo = new Titulo();

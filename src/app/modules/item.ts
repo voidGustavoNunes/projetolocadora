@@ -5,7 +5,7 @@ export class Item {
   id: ID | undefined;
   numeroSerie: number | undefined;
   dataAquisicao: Date | undefined;
-  public tituloId?: number | undefined;
+  tituloId?: number | undefined;
   tipo: Tipo | undefined;
 
 
