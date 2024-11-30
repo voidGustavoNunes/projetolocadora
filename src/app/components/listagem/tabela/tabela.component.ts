@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
 import { DiretorService } from 'src/app/service/diretorService';
+import { ClienteService } from 'src/app/service/clienteService';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { Ator } from 'src/app/modules/ator';
@@ -12,6 +13,7 @@ import { ItemService } from 'src/app/service/itemService';
 import { TituloService } from 'src/app/service/tituloService';
 import { Item } from 'src/app/modules/item';
 import { Titulo } from 'src/app/modules/titulo';
+import { Cliente } from 'src/app/modules/cliente';
 
 @Component({
   selector: 'app-tabela',
@@ -22,13 +24,14 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   filtroSelecionado: string = 'atores';
-  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo>();
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Cliente>();
 
   atores: any[] = [];
   classes: any[] = [];
   diretores: any[] = [];
   titulos: any[] = [];
   itens: any[] = [];
+  clientes: any[] = [];
 
 
   displayedColumns: string[] = [];
@@ -40,6 +43,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     private readonly diretorService: DiretorService,
     private readonly itemService: ItemService,
     private readonly tituloService: TituloService,
+    private readonly clienteService: ClienteService,
     private readonly router: Router
   ) {}
 
@@ -54,6 +58,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
+    this.carregarClientes();
     this.carregarAtores();
     this.carregarClasses();
     this.carregarDiretores();
@@ -78,8 +83,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     } else if (this.filtroSelecionado === 'títulos') {
       this.itensFiltrados.data = this.titulos;
       this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria', 'acoes'];
-    }
+    } else if (this.filtroSelecionado === 'clientes') {
+      this.itensFiltrados.data = this.clientes;
+      this.displayedColumns = ['nome', 'acoes'];
 
+    }
+    
     if (this.paginator) {
       this.itensFiltrados.paginator = this.paginator;
     }
@@ -134,6 +143,15 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       error => console.error('Erro ao carregar títulos', error)
     );
   }
+  carregarClientes(): void {
+    this.clienteService.getList().subscribe(
+      data => {
+        this.clientes = data;
+        this.filtrarDados();
+      },
+      error => console.error('Erro ao carregar clientes', error)
+    );
+  }
 
 
   editarItem(item: any): void {
@@ -157,6 +175,9 @@ export class TabelaComponent implements OnInit, AfterViewInit {
         break;
       case 'títulos':
         rotaCadastro = '/cadastro-titulo';
+        break;
+      case 'clientes':
+        rotaCadastro = '/cadastro-cliente';
         break;
     }
 
@@ -224,6 +245,16 @@ export class TabelaComponent implements OnInit, AfterViewInit {
             console.log('Título apagado com sucesso.');
           },
           error => console.error('Erro ao apagar título', error)
+        );
+      }
+      else if (this.filtroSelecionado === 'clientes') {
+        this.itemService.delete(item.id).subscribe(
+          () => {
+            this.carregarClientes();
+            this.filtrarDados();
+            console.log('Cliente apagado com sucesso.');
+          },
+          error => console.error('Erro ao apagar cliente', error)
         );
       }
     }

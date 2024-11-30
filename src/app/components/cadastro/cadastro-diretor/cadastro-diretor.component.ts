@@ -16,6 +16,7 @@ export class CadastroDiretorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('teste12');
     if (history.state.item) {
       this.diretor = history.state.item;
     }

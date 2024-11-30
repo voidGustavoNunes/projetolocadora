@@ -24,6 +24,7 @@ export class CadastroClienteComponent {
   }
 
   ngOnInit(): void {
+    console.log('teste');
     if (history.state.item) {
       this.cliente = history.state.item;
     }

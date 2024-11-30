@@ -1,4 +1,4 @@
-<!-- <div class="container form-container mt-5">
+<div class="container form-container mt-5">
   <h2>{{ cliente.id ? 'Editar Cliente' : 'Cadastrar Cliente' }}</h2>
 
   <form (ngSubmit)="salvar()" #clienteForm="ngForm" class="row">
@@ -29,10 +29,10 @@
     <ng-container *ngIf="sexo.length > 0">
       <div class="form-group col-sm-6">
         <label for="sexo">Sexo:</label>
-        <select id="sexo" class="form-control" [(ngModel)]="cliente.sexo" name="sexo" required #sexo="ngModel">
+        <select id="sexo" class="form-control" [(ngModel)]="cliente.sexo" name="sexo" required #sexoModel="ngModel">
           <option *ngFor="let s of sexo" [value]="s">{{ s }}</option>
         </select>
-        <div *ngIf="sexo.invalid && sexo.touched" class="text-danger">
+        <div *ngIf="sexoModel.invalid && sexoModel.touched" class="text-danger">
           O sexo é obrigatório.
         </div>
       </div>
@@ -66,7 +66,7 @@
   </form>
 </div>
 
-<!-- Modal para cadastro de dependente
+<!-- Modal para cadastro de dependente -->
 <div class="modal fade" id="modalDependente" tabindex="-1" aria-labelledby="modalDependenteLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -98,4 +98,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>

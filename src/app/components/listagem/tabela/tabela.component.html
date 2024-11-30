@@ -10,6 +10,7 @@
       <option value="diretores">Diretores</option>
       <option value="itens">Itens</option>
       <option value="títulos">Títulos</option>
+      <option value="clientes">Clientes</option>
     </select>
   </div>
 
@@ -29,6 +30,9 @@
     </ng-container>
     <ng-container *ngIf="filtroSelecionado === 'títulos'">
       <h2>Títulos</h2>
+    </ng-container>
+    <ng-container *ngIf="filtroSelecionado === 'clientes'">
+      <h2>Clientes</h2>
     </ng-container>
   </div>
   <!-- Tabela de Itens -->

@@ -1,37 +1,50 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuCategoriesComponent } from './components/menu-categories/menu-categories.component';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+
+//Components
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
+import { BaseComponent } from './components/base/components/base.component';
+import { MenuCategoriesComponent } from './components/menu-categories/menu-categories.component';
+
+// Listagem
 import { AtorComponent } from './components/listagem/ator/ator.component';
 import { ClasseComponent } from './components/listagem/classe/classe.component';
 import { DiretorComponent } from './components/listagem/diretor/diretor.component';
+import { TabelaComponent } from './components/listagem/tabela/tabela.component';
+import { ItemComponent } from './components/listagem/item/item.component';
+import { TituloComponent } from './components/listagem/titulo/titulo.component';
+import { ClienteComponent } from './components/listagem/cliente/cliente.component';
+
+// Cadastro
 import { CadastroAtorComponent } from './components/cadastro/cadastro-ator/cadastro-ator.component';
 import { CadastroDiretorComponent } from './components/cadastro/cadastro-diretor/cadastro-diretor.component';
 import { CadastroClasseComponent } from './components/cadastro/cadastro-classe/cadastro-classe.component';
-import { FormsModule } from '@angular/forms';
-import { BaseComponent } from './components/base/components/base.component';
-import { TabelaComponent } from './components/listagem/tabela/tabela.component';
-import { HttpClientModule } from '@angular/common/http';
+import { CadastroItemComponent } from './components/cadastro/cadastro-item/cadastro-item.component';
+import { CadastroTituloComponent } from './components/cadastro/cadastro-titulo/cadastro-titulo.component';
+import { CadastroDependenteComponent } from './components/cadastro/cadastro-dependente/cadastro-dependente.component';
+import { CadastroClienteComponent } from './components/cadastro/cadastro-cliente/cadastro-cliente.component';
+
+
+//Services
 import { AtorService } from './service/atorService';
 import { ClasseService } from './service/classeService';
 import { DiretorService } from './service/diretorService';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { ItemComponent } from './components/listagem/item/item.component';
-import { CadastroItemComponent } from './components/cadastro/cadastro-item/cadastro-item.component';
-import { CadastroTituloComponent } from './components/cadastro/cadastro-titulo/cadastro-titulo.component';
-import { TituloComponent } from './components/listagem/titulo/titulo.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ItemService } from './service/itemService';
 import { TituloService } from './service/tituloService';
-import { HomeComponent } from './components/home/home.component';
-import { ToastrModule } from 'ngx-toastr';
-import { CadastroClienteComponent } from './components/cadastro/cadastro-cliente/cadastro-cliente.component';
-import { CadastroDependenteComponent } from './components/cadastro/cadastro-dependente/cadastro-dependente.component';
+import { ClienteService } from './service/clienteService';
+import { DependenteService } from './service/dependenteService';
+
 
 const routes : Routes = [
   {path: 'cadastro-ator', component: CadastroAtorComponent },
@@ -49,6 +62,7 @@ const routes : Routes = [
   {path: 'diretores', component: DiretorComponent},
   {path: 'atores', component: AtorComponent},
   {path: 'classes', component: ClasseComponent},
+  {path: 'clientes', component: ClienteComponent},
   {path: 'home', component: HomeComponent},
   { path: 'tabela', component: TabelaComponent },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -65,21 +79,21 @@ const routes : Routes = [
     AtorComponent,
     ClasseComponent,
     DiretorComponent,
-    SearchComponent,
-    CadastroAtorComponent,
-    CadastroDiretorComponent,
-    CadastroClasseComponent,
     BaseComponent,
     TabelaComponent,
     ItemComponent,
-    CadastroItemComponent,
-    CadastroTituloComponent,
     TituloComponent,
     HomeComponent,
-    CadastroClienteComponent,
+    SearchComponent,
+    ClienteComponent,
+    
+    CadastroAtorComponent,
+    CadastroDiretorComponent,
+    CadastroClasseComponent,
+    CadastroItemComponent,
+    CadastroTituloComponent,
     CadastroClienteComponent,
     CadastroDependenteComponent,
-
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -96,8 +110,10 @@ const routes : Routes = [
   providers: [AtorService,
               ClasseService,
               DiretorService,
+              DependenteService,
               ItemService,
               TituloService,
+              ClienteService,
               HomeComponent,
   ],
   bootstrap: [AppComponent]
