@@ -16,4 +16,9 @@ export class ClienteService extends GenericService<Cliente, ID>{
   constructor(override httpClient: HttpClient) {
     super(httpClient);
    }
+
+   getAll() {
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/clientes`);
+  }
+
 }

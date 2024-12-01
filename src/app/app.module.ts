@@ -44,6 +44,9 @@ import { ItemService } from './service/itemService';
 import { TituloService } from './service/tituloService';
 import { ClienteService } from './service/clienteService';
 import { DependenteService } from './service/dependenteService';
+import { EfetuarLocacaoComponent } from './components/cadastro/efetuar-locacao/efetuar-locacao.component';
+import { EfetuarDevolucaoComponent } from './components/cadastro/efetuar-devolucao/efetuar-devolucao.component';
+import { LocacaoService } from './service/locacaoService';
 
 
 const routes : Routes = [
@@ -57,6 +60,8 @@ const routes : Routes = [
   {path: 'atores/:id', component: AtorComponent},
   {path: 'search/:keyword', component: SearchComponent},
   {path: 'classes/:id', component: ClasseComponent},
+  {path: 'efetiuar-locacao', component: EfetuarLocacaoComponent},
+  {path: 'efetuar-devolucao', component: EfetuarDevolucaoComponent},
 
   {path: 'diretores/:id', component: DiretorComponent},
   {path: 'diretores', component: DiretorComponent},
@@ -86,7 +91,7 @@ const routes : Routes = [
     HomeComponent,
     SearchComponent,
     ClienteComponent,
-    
+
     CadastroAtorComponent,
     CadastroDiretorComponent,
     CadastroClasseComponent,
@@ -94,6 +99,8 @@ const routes : Routes = [
     CadastroTituloComponent,
     CadastroClienteComponent,
     CadastroDependenteComponent,
+    EfetuarLocacaoComponent,
+    EfetuarDevolucaoComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -114,6 +121,7 @@ const routes : Routes = [
               ItemService,
               TituloService,
               ClienteService,
+              LocacaoService,
               HomeComponent,
   ],
   bootstrap: [AppComponent]

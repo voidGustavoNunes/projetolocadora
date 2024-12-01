@@ -16,4 +16,8 @@ export class ItemService extends GenericService<Item, ID>{
     super(httpClient);
   }
 
+  getAll() {
+    return this.httpClient.get<Item[]>(`${this.baseUrl}/itens`);
+  }
+
 }
