@@ -1,19 +1,21 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { AtorService } from 'src/app/service/atorService';
-import { ClasseService } from 'src/app/service/classeService';
-import { DiretorService } from 'src/app/service/diretorService';
-import { ClienteService } from 'src/app/service/clienteService';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
 import { Ator } from 'src/app/modules/ator';
 import { Classe } from 'src/app/modules/classe';
-import { Diretor } from 'src/app/modules/diretor';
-import { ItemService } from 'src/app/service/itemService';
-import { TituloService } from 'src/app/service/tituloService';
-import { Item } from 'src/app/modules/item';
-import { Titulo } from 'src/app/modules/titulo';
 import { Cliente } from 'src/app/modules/cliente';
+import { Diretor } from 'src/app/modules/diretor';
+import { Item } from 'src/app/modules/item';
+import { Locacao } from 'src/app/modules/locacao';
+import { Titulo } from 'src/app/modules/titulo';
+import { AtorService } from 'src/app/service/atorService';
+import { ClasseService } from 'src/app/service/classeService';
+import { ClienteService } from 'src/app/service/clienteService';
+import { DiretorService } from 'src/app/service/diretorService';
+import { ItemService } from 'src/app/service/itemService';
+import { LocacaoService } from 'src/app/service/locacaoService';
+import { TituloService } from 'src/app/service/tituloService';
 
 @Component({
   selector: 'app-tabela',
@@ -24,7 +26,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   filtroSelecionado: string = 'atores';
-  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Cliente>();
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Cliente | Locacao>();
 
   atores: any[] = [];
   classes: any[] = [];
@@ -32,7 +34,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   titulos: any[] = [];
   itens: any[] = [];
   clientes: any[] = [];
-
+  locacoes: any[] = [];
 
   displayedColumns: string[] = [];
 
@@ -44,6 +46,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     private readonly itemService: ItemService,
     private readonly tituloService: TituloService,
     private readonly clienteService: ClienteService,
+    private readonly locacaoService: LocacaoService,
     private readonly router: Router
   ) {}
 
@@ -64,6 +67,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.carregarDiretores();
     this.carregarItens();
     this.carregarTitulos();
+    this.carregarLocacoes();
   }
 
 
@@ -86,9 +90,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     } else if (this.filtroSelecionado === 'clientes') {
       this.itensFiltrados.data = this.clientes;
       this.displayedColumns = ['nome', 'acoes'];
-
     }
-    
+    else if (this.filtroSelecionado === 'locacoes') {
+      this.itensFiltrados.data = this.locacoes; //
+      this.displayedColumns = ['cliente', 'numeroSerieLocacao', 'dataDevolucaoPrevista', 'valorLocacao', 'acoes'];
+    }
+
     if (this.paginator) {
       this.itensFiltrados.paginator = this.paginator;
     }
@@ -153,6 +160,20 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     );
   }
 
+  carregarLocacoes(): void {
+    this.locacaoService.getList().subscribe(
+      (data: Locacao[]) => {
+        this.locacoes = data.map(locacao => ({
+          ...locacao,
+          cliente: locacao.cliente || { nome: 'Cliente não informado' },
+          item: locacao.item || { numeroSerie: 'N/A' },
+        }));
+        this.filtrarDados();
+      },
+      error => console.error('Erro ao carregar locações', error)
+    );
+  }
+
 
   editarItem(item: any): void {
     let rotaCadastro = '';
@@ -160,7 +181,6 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     switch (this.filtroSelecionado) {
       case 'atores':
         rotaCadastro = '/cadastro-ator';
-        
         break;
       case 'classes':
         rotaCadastro = '/cadastro-classe';
@@ -169,8 +189,6 @@ export class TabelaComponent implements OnInit, AfterViewInit {
         rotaCadastro = '/cadastro-diretor';
         break;
       case 'itens':
-
-        console.log(item.id);
         rotaCadastro = '/cadastro-item';
         break;
       case 'títulos':
@@ -179,6 +197,9 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       case 'clientes':
         rotaCadastro = '/cadastro-cliente';
         break;
+      case 'locacoes':
+          rotaCadastro = '/efetuar-locacao';
+          break;
     }
 
     if (rotaCadastro) {
@@ -189,7 +210,10 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   apagarItem(item: any): void {
     let confirmacao = null;
-    if(this.filtroSelecionado !== 'itens'){
+    if(this.filtroSelecionado == 'locacoes'){
+      confirmacao = confirm(`Tem certeza que deseja apagar Locação de ID: ${item.id}?`);
+    }
+    else if(this.filtroSelecionado !== 'itens' && this.filtroSelecionado !== 'locacoes'){
       confirmacao = confirm(`Tem certeza que deseja apagar ${item.nome}?`);
     }else{
       confirmacao = confirm(`Tem certeza que deseja apagar ${item.numeroSerie}?`);
@@ -248,13 +272,23 @@ export class TabelaComponent implements OnInit, AfterViewInit {
         );
       }
       else if (this.filtroSelecionado === 'clientes') {
-        this.itemService.delete(item.id).subscribe(
+        this.clienteService.delete(item.id).subscribe(
           () => {
             this.carregarClientes();
             this.filtrarDados();
             console.log('Cliente apagado com sucesso.');
           },
           error => console.error('Erro ao apagar cliente', error)
+        );
+      }
+      else if (this.filtroSelecionado === 'locacoes') {
+        this.locacaoService.delete(item.id).subscribe(
+          () => {
+            this.carregarLocacoes();
+            this.filtrarDados();
+            console.log('Locação apagada com sucesso.');
+          },
+          error => console.error('Erro ao apagar locação', error)
         );
       }
     }

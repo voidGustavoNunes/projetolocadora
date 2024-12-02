@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr'; // Importar o serviço Toastr
 import { Cliente } from 'src/app/modules/cliente';
 import { Item } from 'src/app/modules/item';
 import { ClienteService } from 'src/app/service/clienteService';
 import { ItemService } from 'src/app/service/itemService';
 import { LocacaoService } from 'src/app/service/locacaoService';
-import { ToastrService } from 'ngx-toastr';  // Importar o serviço Toastr
 
 @Component({
   selector: 'app-efetuar-locacao',
@@ -31,8 +31,14 @@ export class EfetuarLocacaoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (history.state.item) {
+      this.locacao = history.state.item;
+
+
+    }
     this.carregarClientes();
     this.carregarItens();
+    console.log(this.locacao);
   }
 
   carregarClientes(): void {
@@ -46,7 +52,7 @@ export class EfetuarLocacaoComponent implements OnInit {
       },
     });
   }
-  
+
   atualizarDataDevolucaoPrevista(): void {
     const itemId = this.locacao.itemId;
 
