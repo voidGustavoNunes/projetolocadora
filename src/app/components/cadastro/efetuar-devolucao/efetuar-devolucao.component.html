@@ -1,0 +1,35 @@
+<div class="devolucao-container">
+  <h2>Efetuar Devolução</h2>
+  <form [formGroup]="devolucaoForm" (ngSubmit)="buscarLocacao()">
+    <div class="form-group">
+      <label for="numeroSerie">Número de Série:</label>
+      <input
+        id="numeroSerie"
+        type="text"
+        formControlName="numeroSerie"
+        class="form-control"
+        placeholder="Informe o número de série do item"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!devolucaoForm.valid">
+      Buscar Locação
+    </button>
+  </form>
+
+  <div *ngIf="erro" class="alert alert-danger mt-3">
+    {{ erro }}
+  </div>
+
+  <div *ngIf="locacaoDetalhes" class="locacao-detalhes mt-3">
+    <h3>Detalhes da Locação</h3>
+    <p><strong>Cliente:</strong> {{ locacaoDetalhes.cliente }}</p>
+    <p><strong>Data de Locação:</strong> {{ locacaoDetalhes.dataLocacao }}</p>
+    <p><strong>Data Prevista:</strong> {{ locacaoDetalhes.dataDevolucaoPrevista }}</p>
+    <p><strong>Multa:</strong> R$ {{ locacaoDetalhes.multa }}</p>
+    <p><strong>Total a Pagar:</strong> R$ {{ locacaoDetalhes.total }}</p>
+
+    <button class="btn btn-success" (click)="efetuarDevolucao()">
+      Confirmar Devolução
+    </button>
+  </div>
+</div>

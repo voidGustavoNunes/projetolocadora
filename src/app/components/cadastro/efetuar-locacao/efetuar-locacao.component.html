@@ -16,7 +16,15 @@
 
     <div class="form-group mt-3">
       <label for="item">Item:</label>
-      <select id="item" class="form-control" [(ngModel)]="locacao.itemId" name="item" required #item="ngModel">
+      <select
+        id="item"
+        class="form-control"
+        [(ngModel)]="locacao.itemId"
+        name="item"
+        required
+        #item="ngModel"
+        (change)="atualizarDataDevolucaoPrevista()"
+      >
         <option *ngFor="let item of itens" [value]="item.id">
           {{ item.numeroSerie }}
         </option>

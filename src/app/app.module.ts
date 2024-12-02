@@ -47,6 +47,7 @@ import { DependenteService } from './service/dependenteService';
 import { EfetuarLocacaoComponent } from './components/cadastro/efetuar-locacao/efetuar-locacao.component';
 import { EfetuarDevolucaoComponent } from './components/cadastro/efetuar-devolucao/efetuar-devolucao.component';
 import { LocacaoService } from './service/locacaoService';
+import { DevolucaoService } from './service/devolucaoService';
 
 
 const routes : Routes = [
@@ -60,7 +61,7 @@ const routes : Routes = [
   {path: 'atores/:id', component: AtorComponent},
   {path: 'search/:keyword', component: SearchComponent},
   {path: 'classes/:id', component: ClasseComponent},
-  {path: 'efetiuar-locacao', component: EfetuarLocacaoComponent},
+  {path: 'efetuar-locacao', component: EfetuarLocacaoComponent},
   {path: 'efetuar-devolucao', component: EfetuarDevolucaoComponent},
 
   {path: 'diretores/:id', component: DiretorComponent},
@@ -122,6 +123,7 @@ const routes : Routes = [
               TituloService,
               ClienteService,
               LocacaoService,
+              DevolucaoService,
               HomeComponent,
   ],
   bootstrap: [AppComponent]

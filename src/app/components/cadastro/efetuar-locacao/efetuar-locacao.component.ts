@@ -46,6 +46,36 @@ export class EfetuarLocacaoComponent implements OnInit {
       },
     });
   }
+  
+  atualizarDataDevolucaoPrevista(): void {
+    const itemId = this.locacao.itemId;
+
+    if (itemId) {
+      this.itemService.getById(itemId).subscribe({
+        next: (item: Item) => {
+          if (item && item.tituloId) {
+            this.itemService.getTituloByItemId(item.tituloId).subscribe({
+              next: (titulo) => {
+                if (titulo && titulo.classe) {
+                  // Substituí prazoDias por lógica baseada na dataDevolucao
+                  const dataDevolucao = new Date(titulo.classe.dataDevolucao);
+                  this.locacao.dataDevolucaoPrevista = dataDevolucao.toISOString().split('T')[0];
+                  this.locacao.valor = titulo.classe.valor;
+                }
+              },
+              error: (err) => {
+                console.error('Erro ao buscar o título associado', err);
+              },
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Erro ao buscar o item', err);
+        },
+      });
+    }
+  }
+
 
   carregarItens(): void {
     this.itemService.getAll().subscribe({
