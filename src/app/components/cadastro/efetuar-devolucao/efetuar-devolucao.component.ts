@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DevolucaoService } from 'src/app/service/devolucaoService';
 
 @Component({
@@ -28,6 +28,7 @@ export class EfetuarDevolucaoComponent {
       next: (data) => {
         this.locacaoDetalhes = data;
         this.erro = null;
+        console.log(this.locacaoDetalhes)
       },
       error: (err) => {
         this.erro = err.error.message || 'Erro ao buscar locação.';
