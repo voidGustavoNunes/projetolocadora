@@ -57,35 +57,39 @@ export class CadastroClienteComponent {
 
   ///DEPENDENTES
 
-  abrirModalDependente(): void {
-    this.dependente = new Dependente();
-    const modalElement = document.getElementById('modalDependente')!;
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
-  }
+  // abrirModalDependente(): void {
+  //   this.dependente = new Dependente();
+  //   const modalElement = document.getElementById('modalDependente')!;
+  //   const modal = new bootstrap.Modal(modalElement);
+  //   modal.show();
+  // }
 
-  adicionarDependente(): void {
-    if (this.dependente.nome?.trim() && this.dependente.sexo && this.dependente.dataNascimento) {
-      this.cliente.dependentes.push(this.dependente);
+  // adicionarDependente(): void {
+  //   if (this.dependente.nome?.trim() && this.dependente.sexo && this.dependente.dataNascimento) {
+  //     this.cliente.dependentes.push(this.dependente);
 
-      const modalElement = document.getElementById('modalDependente')!;
-      const modal = bootstrap.Modal.getInstance(modalElement);
+  //     const modalElement = document.getElementById('modalDependente')!;
+  //     const modal = bootstrap.Modal.getInstance(modalElement);
 
-      if (modal) {
-        modal.hide();
-      } else {
-        console.error('Modal instance not found.');
-      }
-    } else {
-      alert('Preencha todos os campos do dependente.');
-    }
-  }
-  removerDependente(index: number): void {
-    if (index >= 0 && index < this.cliente.dependentes.length) {
-      this.cliente.dependentes.splice(index, 1);
-    } else {
-      console.error('Índice inválido ao remover dependente.');
-    }
+  //     if (modal) {
+  //       modal.hide();
+  //     } else {
+  //       console.error('Modal instance not found.');
+  //     }
+  //   } else {
+  //     alert('Preencha todos os campos do dependente.');
+  //   }
+  // }
+  // removerDependente(index: number): void {
+  //   if (index >= 0 && index < this.cliente.dependentes.length) {
+  //     this.cliente.dependentes.splice(index, 1);
+  //   } else {
+  //     console.error('Índice inválido ao remover dependente.');
+  //   }
+  // }
+
+  adicionarDependente(novoDependente: Dependente): void {
+    this.cliente.dependentes.push(novoDependente);
   }
 
 }

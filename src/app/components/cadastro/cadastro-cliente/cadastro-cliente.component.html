@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="form-group col-sm-12">
+    <!-- <div class="form-group col-sm-12">
       <label>Dependentes:</label>
       <div class="d-flex flex-column gap-2">
         <ul class="list-group">
@@ -62,11 +62,22 @@
     <div class="d-flex justify-content-end mt-3 gap-2">
       <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
       <button type="submit" class="btn btn-success" [disabled]="clienteForm.invalid">Salvar</button>
-    </div>
+    </div> -->
   </form>
 </div>
 
-<!-- Modal para cadastro de dependente -->
+<!-- modal para cadastro de dependente -->
+
+<app-cadastro-dependente
+  [dependente]="dependente"
+  [sexo]="sexo"
+  (dependenteAdicionado)="adicionarDependente($event)">
+</app-cadastro-dependente>
+
+
+
+
+<!-- Modal para cadastro de dependente
 <div class="modal fade" id="modalDependente" tabindex="-1" aria-labelledby="modalDependenteLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -98,4 +109,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
