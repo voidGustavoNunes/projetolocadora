@@ -20,7 +20,7 @@ export class ItemService extends GenericService<Item, ID>{
   }
 
   getAll() {
-    return this.httpClient.get<Item[]>(`${this.baseUrl}/itens`);
+    return this.httpClient.get<Item[]>(`${this.baseUrl}`);
   }
 
   getById(id: ID): Observable<Item> {
