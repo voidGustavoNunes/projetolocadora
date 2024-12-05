@@ -9,7 +9,7 @@ import { Socio } from "../modules/socio";
 @Injectable({
   providedIn: 'root'
 })
-export class SocioService extends GenericService<Socio, ID>{
+export class SocioService extends GenericService<Socio, number>{
 
   protected override baseUrl = "http://localhost:8080/socios";
 

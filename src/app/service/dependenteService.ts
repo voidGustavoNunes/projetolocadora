@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 @Injectable({
   providedIn: 'root'
 })
-export class DependenteService extends GenericService<Dependente, ID>{
+export class DependenteService extends GenericService<Dependente, number>{
 
 
   protected override baseUrl = "http://localhost:8080/dependentes";

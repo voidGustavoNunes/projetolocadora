@@ -1,15 +1,13 @@
-import { ID } from '@datorama/akita';
 import { Cliente } from './cliente';
 import { Dependente } from './dependente';
 
 export class Socio extends Cliente {
-  id: ID | undefined = undefined;
   endereco: string;
   telefone: string;
   dependentes: Dependente[];
 
   constructor(
-    id: | undefined = undefined,
+    id: number | undefined = undefined,
     nome: string = '',
     cpf: string = '',
     sexo: string = '',
@@ -19,8 +17,7 @@ export class Socio extends Cliente {
     telefone: string = '',
     dependentes: Dependente[] = []
   ) {
-    super(nome, cpf, sexo, dataNascimento, ativo);
-    this.id = id;
+    super(id, nome, cpf, sexo, dataNascimento, ativo);
     this.endereco = endereco;
     this.telefone = telefone;
     this.dependentes = dependentes;

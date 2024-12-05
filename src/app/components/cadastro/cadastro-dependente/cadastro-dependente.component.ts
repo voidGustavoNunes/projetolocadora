@@ -20,6 +20,8 @@ export class CadastroDependenteComponent implements OnInit {
 
   salvar(): void {
     if (this.dependente.nome && this.dependente.sexo && this.dependente.dataNascimento) {
+      console.log('THIS DEPENDENTE: ' + this.dependente);
+      console.log('DEPENDENTE SALVO: ' + this.dependenteSalvo);
       this.dependenteSalvo.emit(this.dependente);
     } else {
       alert('Preencha todos os campos.');

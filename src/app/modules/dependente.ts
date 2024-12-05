@@ -1,6 +1,7 @@
+import { Socio } from "./socio";
 
 export class Dependente {
-  socioId: number;
+  socio: Socio | undefined;
   id?: number;
   nome: string = '';
   dataNascimento: string = '';
@@ -11,9 +12,9 @@ export class Dependente {
     nome: string = '',
     sexo: string = '',
     dataNascimento: string = '',
-    socioId: number = 0
+    socio?: Socio
   ) {
-    this.socioId = socioId;
+    this.socio = socio;
     this.id = id;
     this.nome = nome;
     this.dataNascimento = dataNascimento;
