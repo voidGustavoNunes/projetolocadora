@@ -8,13 +8,14 @@ import { Cliente } from 'src/app/modules/cliente';
 import { Diretor } from 'src/app/modules/diretor';
 import { Item } from 'src/app/modules/item';
 import { Locacao } from 'src/app/modules/locacao';
+import { Socio } from 'src/app/modules/socio';
 import { Titulo } from 'src/app/modules/titulo';
 import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
-import { ClienteService } from 'src/app/service/clienteService';
 import { DiretorService } from 'src/app/service/diretorService';
 import { ItemService } from 'src/app/service/itemService';
 import { LocacaoService } from 'src/app/service/locacaoService';
+import {  SocioService } from 'src/app/service/socioService';
 import { TituloService } from 'src/app/service/tituloService';
 
 @Component({
@@ -26,14 +27,14 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   filtroSelecionado: string = 'atores';
-  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Cliente | Locacao>();
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Socio | Locacao>();
 
   atores: any[] = [];
   classes: any[] = [];
   diretores: any[] = [];
   titulos: any[] = [];
   itens: any[] = [];
-  clientes: any[] = [];
+  socios: any[] = [];
   locacoes: any[] = [];
 
   displayedColumns: string[] = [];
@@ -45,8 +46,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     private readonly diretorService: DiretorService,
     private readonly itemService: ItemService,
     private readonly tituloService: TituloService,
-    private readonly clienteService: ClienteService,
     private readonly locacaoService: LocacaoService,
+    private readonly socioService: SocioService,
     private readonly router: Router
   ) {}
 
@@ -61,7 +62,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.carregarClientes();
+    this.carregarSocios();
     this.carregarAtores();
     this.carregarClasses();
     this.carregarDiretores();
@@ -87,13 +88,13 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     } else if (this.filtroSelecionado === 'títulos') {
       this.itensFiltrados.data = this.titulos;
       this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria', 'acoes'];
-    } else if (this.filtroSelecionado === 'clientes') {
-      this.itensFiltrados.data = this.clientes;
+    } else if (this.filtroSelecionado === 'socios') {
+      this.itensFiltrados.data = this.socios;
       this.displayedColumns = ['nome', 'acoes'];
     }
     else if (this.filtroSelecionado === 'locacoes') {
       this.itensFiltrados.data = this.locacoes; //
-      this.displayedColumns = ['cliente', 'numeroSerieLocacao', 'dataDevolucaoPrevista', 'valorLocacao', 'status', 'acoes'];
+      this.displayedColumns = ['socio', 'numeroSerieLocacao', 'dataDevolucaoPrevista', 'valorLocacao', 'status', 'acoes'];
     }
 
     if (this.paginator) {
@@ -150,13 +151,13 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       error => console.error('Erro ao carregar títulos', error)
     );
   }
-  carregarClientes(): void {
-    this.clienteService.getList().subscribe(
+  carregarSocios(): void {
+    this.socioService.getList().subscribe(
       data => {
-        this.clientes = data;
+        this.socios = data;
         this.filtrarDados();
       },
-      error => console.error('Erro ao carregar clientes', error)
+      error => console.error('Erro ao carregar sócios', error)
     );
   }
 
@@ -165,7 +166,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       (data: Locacao[]) => {
         this.locacoes = data.map(locacao => ({
           ...locacao,
-          cliente: locacao.cliente || { nome: 'Cliente não informado' },
+          socio: locacao.socio || { nome: 'Sócio não informado' },
           item: locacao.item || { numeroSerie: 'N/A' },
         }));
         this.filtrarDados();
@@ -194,8 +195,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       case 'títulos':
         rotaCadastro = '/cadastro-titulo';
         break;
-      case 'clientes':
-        rotaCadastro = '/cadastro-cliente';
+      case 'socios':
+        rotaCadastro = '/cadastro-socio';
         break;
       case 'locacoes':
           rotaCadastro = '/efetuar-locacao';
@@ -271,14 +272,14 @@ export class TabelaComponent implements OnInit, AfterViewInit {
           error => console.error('Erro ao apagar título', error)
         );
       }
-      else if (this.filtroSelecionado === 'clientes') {
-        this.clienteService.delete(item.id).subscribe(
+      else if (this.filtroSelecionado === 'socios') {
+        this.socioService.delete(item.id).subscribe(
           () => {
-            this.carregarClientes();
+            this.carregarSocios();
             this.filtrarDados();
-            console.log('Cliente apagado com sucesso.');
+            console.log('Sócio apagado com sucesso.');
           },
-          error => console.error('Erro ao apagar cliente', error)
+          error => console.error('Erro ao apagar sócio', error)
         );
       }
       else if (this.filtroSelecionado === 'locacoes') {

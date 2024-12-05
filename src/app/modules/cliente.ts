@@ -1,32 +1,23 @@
-import { ID } from "@datorama/akita";
-import { Sexo } from "./enums/sexo";
-import { Dependente } from "./dependente";
 
-export class Cliente{
-  id: ID | undefined;
-  nome: string | undefined ;
-  endereco: string | undefined ;
-  cpf: string | undefined;
-  sexo: Sexo;
-  dataNascimento: Date | undefined;
-  dependentes: Dependente[];
 
+export class Cliente {
+  nome: string;
+  cpf: string;
+  sexo: string;
+  dataNascimento: string;
+  ativo: boolean;
 
   constructor(
-    id: ID | undefined = undefined,
-    nome?: string,
-    endereco?: string,
-    cpf?: string,
-    sexo?: Sexo,
-    dataNascimento?: Date,
-    dependentes: Dependente[] = []
+    nome: string = '',
+    cpf: string = '',
+    sexo: string = '',
+    dataNascimento: string = '',
+    ativo: boolean = true
   ) {
-    this.id = id;
     this.nome = nome;
-    this.endereco = endereco;
     this.cpf = cpf;
-    this.sexo = Sexo.MASCULINO;
+    this.sexo = sexo;
     this.dataNascimento = dataNascimento;
-    this.dependentes = dependentes;
+    this.ativo = ativo;
   }
 }

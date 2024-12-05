@@ -3,14 +3,14 @@
 
   <form (ngSubmit)="salvar()" #locacaoForm="ngForm">
     <div class="form-group">
-      <label for="cliente">Cliente:</label>
-      <select id="cliente" class="form-control" [(ngModel)]="locacao.clienteId" name="cliente" required #cliente="ngModel">
-        <option *ngFor="let cliente of clientes" [value]="cliente.id">
-          {{ cliente.nome }}
+      <label for="socio">socio:</label>
+      <select id="socio" class="form-control" [(ngModel)]="locacao.socioId" name="socio" required #socio="ngModel">
+        <option *ngFor="let socio of socios" [value]="socio.id">
+          {{ socio.nome }}
         </option>
       </select>
-      <div *ngIf="cliente.invalid && cliente.touched" class="text-danger">
-        O cliente é obrigatório.
+      <div *ngIf="socio.invalid && socio.touched" class="text-danger">
+        O socio é obrigatório.
       </div>
     </div>
 

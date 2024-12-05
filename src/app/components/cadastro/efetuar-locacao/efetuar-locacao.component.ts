@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr'; // Importar o serviço Toastr
 import { Cliente } from 'src/app/modules/cliente';
 import { Item } from 'src/app/modules/item';
-import { ClienteService } from 'src/app/service/clienteService';
+import { Socio } from 'src/app/modules/socio';
 import { ItemService } from 'src/app/service/itemService';
 import { LocacaoService } from 'src/app/service/locacaoService';
+import { SocioService } from 'src/app/service/socioService';
 
 @Component({
   selector: 'app-efetuar-locacao',
@@ -14,17 +15,17 @@ import { LocacaoService } from 'src/app/service/locacaoService';
 })
 export class EfetuarLocacaoComponent implements OnInit {
   locacao: any = {
-    clienteId: null,
+    socioId: null,
     itemId: null,
     dataDevolucaoPrevista: '',
     valor: 0
   };
-  clientes: Cliente[] = [];
+  socios: Socio[] = [];
   itens: Item[] = [];
 
   constructor(
     private locacaoService: LocacaoService,
-    private clienteService: ClienteService,
+    private socioService: SocioService,
     private itemService: ItemService,
     private router: Router,
     private toastr: ToastrService
@@ -36,19 +37,19 @@ export class EfetuarLocacaoComponent implements OnInit {
 
 
     }
-    this.carregarClientes();
+    this.carregarSocios();
     this.carregarItens();
     console.log(this.locacao);
   }
 
-  carregarClientes(): void {
-    this.clienteService.getAll().subscribe({
-      next: (clientes: Cliente[]) => {
-        this.clientes = clientes;
+  carregarSocios(): void {
+    this.socioService.getAll().subscribe({
+      next: (socio: Socio[]) => {
+        this.socios = socio;
       },
       error: (err) => {
-        this.toastr.error('Erro ao carregar clientes', 'Erro');
-        console.error('Erro ao carregar clientes', err);
+        this.toastr.error('Erro ao carregar socios', 'Erro');
+        console.error('Erro ao carregar socios', err);
       },
     });
   }
@@ -123,7 +124,7 @@ export class EfetuarLocacaoComponent implements OnInit {
 
   cancelar(): void {
     this.locacao = {
-      clienteId: null,
+      socioId: null,
       itemId: null,
       dataDevolucaoPrevista: '',
       valor: 0

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import * as bootstrap from 'bootstrap';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Dependente } from 'src/app/modules/dependente';
 import { Sexo } from 'src/app/modules/enums/sexo';
 
@@ -8,23 +7,26 @@ import { Sexo } from 'src/app/modules/enums/sexo';
   templateUrl: './cadastro-dependente.component.html',
   styleUrls: ['./cadastro-dependente.component.css']
 })
-export class CadastroDependenteComponent {
-  @Input() dependente: Dependente = new Dependente();
-  @Input() sexo: string[] = Object.values(Sexo) as string[];
-  @Output() dependenteAdicionado = new EventEmitter<Dependente>();
+export class CadastroDependenteComponent implements OnInit {
+  @Input() sexo: string[] = [];
+  @Output() dependenteSalvo = new EventEmitter<Dependente>();
+  @Output() modalFechado = new EventEmitter<void>();
+
+  dependente: Dependente = new Dependente();
+
+  constructor() {}
+
+  ngOnInit(): void {}
 
   salvar(): void {
-    if (this.dependente.nome?.trim() && this.dependente.sexo && this.dependente.dataNascimento) {
-      this.dependenteAdicionado.emit(this.dependente);
-      const modalElement = document.getElementById('modalDependente')!;
-      const modal = bootstrap.Modal.getInstance(modalElement);
-
-      if (modal) {
-        modal.hide();
-      }
+    if (this.dependente.nome && this.dependente.sexo && this.dependente.dataNascimento) {
+      this.dependenteSalvo.emit(this.dependente);
     } else {
-      alert('Preencha todos os campos do dependente.');
+      alert('Preencha todos os campos.');
     }
   }
-}
 
+  fecharModal(): void {
+    this.modalFechado.emit();
+  }
+}

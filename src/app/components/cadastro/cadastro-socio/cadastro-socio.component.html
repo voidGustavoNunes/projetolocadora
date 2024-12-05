@@ -1,26 +1,43 @@
 <div class="container form-container mt-5">
-  <h2>{{ cliente.id ? 'Editar Cliente' : 'Cadastrar Cliente' }}</h2>
+  <h2>{{ socio.id ? 'Editar Sócio' : 'Cadastrar Sócio' }}</h2>
 
-  <form (ngSubmit)="salvar()" #clienteForm="ngForm" class="row">
+  <form (ngSubmit)="salvar()" #socioForm="ngForm" class="row">
     <div class="form-group col-sm-6">
       <label for="nome">Nome:</label>
-      <input type="text" id="nome" class="form-control" [(ngModel)]="cliente.nome" name="nome" required #nome="ngModel">
+      <input type="text" id="nome" class="form-control" [(ngModel)]="socio.nome" name="nome" required #nome="ngModel">
       <div *ngIf="nome.invalid && nome.touched" class="text-danger">
-        O nome do cliente é obrigatório.
+        O nome do socio é obrigatório.
       </div>
     </div>
 
     <div class="form-group col-sm-6">
       <label for="endereco">Endereço:</label>
-      <input type="text" id="endereco" class="form-control" [(ngModel)]="cliente.endereco" name="endereco" required #endereco="ngModel">
+      <input type="text" id="endereco" class="form-control" [(ngModel)]="socio.endereco" name="endereco" required #endereco="ngModel">
       <div *ngIf="endereco.invalid && endereco.touched" class="text-danger">
         O endereço é obrigatório.
       </div>
     </div>
 
     <div class="form-group col-sm-6">
+      <label for="telefone">Telefone:</label>
+      <input
+        type="text"
+        id="telefone"
+        class="form-control"
+        [(ngModel)]="socio.telefone"
+        name="telefone"
+        required
+        #telefoneInput="ngModel"
+        telefoneMask
+      >
+      <div *ngIf="telefoneInput.invalid && telefoneInput.touched" class="text-danger">
+        O telefone é obrigatório e deve estar no formato (XX) XXXXX-XXXX.
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
       <label for="cpf">CPF:</label>
-      <input type="text" id="cpf" class="form-control" [(ngModel)]="cliente.cpf" name="cpf" required #cpf="ngModel">
+      <input type="text" id="cpf" class="form-control" [(ngModel)]="socio.cpf" name="cpf" required #cpf="ngModel">
       <div *ngIf="cpf.invalid && cpf.touched" class="text-danger">
         O CPF é obrigatório.
       </div>
@@ -29,7 +46,7 @@
     <ng-container *ngIf="sexo.length > 0">
       <div class="form-group col-sm-6">
         <label for="sexo">Sexo:</label>
-        <select id="sexo" class="form-control" [(ngModel)]="cliente.sexo" name="sexo" required #sexoModel="ngModel">
+        <select id="sexo" class="form-control" [(ngModel)]="socio.sexo" name="sexo" required #sexoModel="ngModel">
           <option *ngFor="let s of sexo" [value]="s">{{ s }}</option>
         </select>
         <div *ngIf="sexoModel.invalid && sexoModel.touched" class="text-danger">
@@ -40,49 +57,40 @@
 
     <div class="form-group col-sm-6">
       <label for="dataNascimento">Data de Nascimento:</label>
-      <input type="date" id="dataNascimento" class="form-control" [(ngModel)]="cliente.dataNascimento" name="dataNascimento" required #dataNascimento="ngModel">
+      <input type="date" id="dataNascimento" class="form-control" [(ngModel)]="socio.dataNascimento" name="dataNascimento" required #dataNascimento="ngModel">
       <div *ngIf="dataNascimento.invalid && dataNascimento.touched" class="text-danger">
         A data de nascimento é obrigatória.
       </div>
     </div>
 
-    <!-- <div class="form-group col-sm-12">
+    <div class="form-group col-sm-12">
       <label>Dependentes:</label>
       <div class="d-flex flex-column gap-2">
         <ul class="list-group">
-          <li *ngFor="let dependente of cliente.dependentes; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+          <li *ngFor="let dependente of socio.dependentes; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ dependente.nome }}
             <button type="button" class="btn btn-danger btn-sm" (click)="removerDependente(i)">Remover</button>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" (click)="abrirModalDependente()">+ Adicionar Dependente</button>
+        <button *ngIf="socio.id" type="button" class="btn btn-primary" (click)="abrirModalDependente()">+ Adicionar Dependente</button>
       </div>
     </div>
 
     <div class="d-flex justify-content-end mt-3 gap-2">
       <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-      <button type="submit" class="btn btn-success" [disabled]="clienteForm.invalid">Salvar</button>
-    </div> -->
+      <button type="submit" class="btn btn-success" [disabled]="socioForm.invalid">Salvar</button>
+    </div>
   </form>
 </div>
 
-<!-- modal para cadastro de dependente -->
-
-<app-cadastro-dependente
-  [dependente]="dependente"
-  [sexo]="sexo"
-  (dependenteAdicionado)="adicionarDependente($event)">
-</app-cadastro-dependente>
-
-
-
-
-<!-- Modal para cadastro de dependente
+<!-- Modal para cadastro de dependente -->
 <div class="modal fade" id="modalDependente" tabindex="-1" aria-labelledby="modalDependenteLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalDependenteLabel">Cadastrar Dependente</h5>
+        <h5 class="modal-title" id="modalDependenteLabel">
+          {{ dependenteEditando !== null ? 'Editar Dependente' : 'Cadastrar Dependente' }}
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -109,4 +117,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
