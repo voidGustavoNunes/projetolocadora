@@ -3,10 +3,11 @@
 export class Cliente {
   id: number | undefined = undefined;
   nome: string;
-  cpf: string;
+  cpf?: string;
   sexo: string;
   dataNascimento: string;
   ativo: boolean;
+  ehDependente: boolean;
 
   constructor(
     id: number | undefined = undefined,
@@ -14,7 +15,8 @@ export class Cliente {
     cpf: string = '',
     sexo: string = '',
     dataNascimento: string = '',
-    ativo: boolean = true
+    ativo: boolean = true,
+    ehDependente: boolean = false
   ) {
     this.id = id;
     this.nome = nome;
@@ -22,5 +24,6 @@ export class Cliente {
     this.sexo = sexo;
     this.dataNascimento = dataNascimento;
     this.ativo = ativo;
+    this.ehDependente = ehDependente;
   }
 }

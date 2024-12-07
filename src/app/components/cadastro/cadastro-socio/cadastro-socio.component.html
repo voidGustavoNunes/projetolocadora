@@ -20,18 +20,9 @@
 
     <div class="form-group col-sm-6">
       <label for="telefone">Telefone:</label>
-      <input
-        type="text"
-        id="telefone"
-        class="form-control"
-        [(ngModel)]="socio.telefone"
-        name="telefone"
-        required
-        #telefoneInput="ngModel"
-        telefoneMask
-      >
-      <div *ngIf="telefoneInput.invalid && telefoneInput.touched" class="text-danger">
-        O telefone é obrigatório e deve estar no formato (XX) XXXXX-XXXX.
+      <input type="text" id="telefone" class="form-control" [(ngModel)]="socio.telefone" name="telefone" required #telefone="ngModel">
+      <div *ngIf="telefone.invalid && telefone.touched" class="text-danger">
+        O telefone é obrigatório.
       </div>
     </div>
 
@@ -69,10 +60,10 @@
         <ul class="list-group">
           <li *ngFor="let dependente of socio.dependentes; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ dependente.nome }}
-            <button type="button" class="btn btn-danger btn-sm" (click)="removerDependente(i)">Remover</button>
+            <!-- <button type="button" class="btn btn-danger btn-sm" (click)="removerDependente(dependente)">Remover</button> -->
           </li>
         </ul>
-        <button *ngIf="socio.id" type="button" class="btn btn-primary" (click)="abrirModalDependente()">+ Adicionar Dependente</button>
+        <button *ngIf="socio.id && socio.dependentes.length < 3" type="button" class="btn btn-primary" (click)="abrirModalDependente()">+ Adicionar Dependente</button>
       </div>
     </div>
 

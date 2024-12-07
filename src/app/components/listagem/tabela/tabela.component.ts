@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Ator } from 'src/app/modules/ator';
 import { Classe } from 'src/app/modules/classe';
 import { Cliente } from 'src/app/modules/cliente';
+import { Dependente } from 'src/app/modules/dependente';
 import { Diretor } from 'src/app/modules/diretor';
 import { Item } from 'src/app/modules/item';
 import { Locacao } from 'src/app/modules/locacao';
@@ -12,6 +13,8 @@ import { Socio } from 'src/app/modules/socio';
 import { Titulo } from 'src/app/modules/titulo';
 import { AtorService } from 'src/app/service/atorService';
 import { ClasseService } from 'src/app/service/classeService';
+import { ClienteService } from 'src/app/service/clienteService';
+import { DependenteService } from 'src/app/service/dependenteService';
 import { DiretorService } from 'src/app/service/diretorService';
 import { ItemService } from 'src/app/service/itemService';
 import { LocacaoService } from 'src/app/service/locacaoService';
@@ -27,7 +30,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   filtroSelecionado: string = 'atores';
-  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Socio | Locacao>();
+  itensFiltrados = new MatTableDataSource<Ator | Classe | Diretor | Item | Titulo | Socio | Locacao | Cliente | Dependente>();
 
   atores: any[] = [];
   classes: any[] = [];
@@ -36,6 +39,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   itens: any[] = [];
   socios: any[] = [];
   locacoes: any[] = [];
+  clientes: any[] = [];
+  dependentes: any[] = [];
 
   displayedColumns: string[] = [];
 
@@ -48,6 +53,8 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     private readonly tituloService: TituloService,
     private readonly locacaoService: LocacaoService,
     private readonly socioService: SocioService,
+    private readonly clienteService: ClienteService,
+    private readonly dependenteService: DependenteService,
     private readonly router: Router
   ) {}
 
@@ -69,6 +76,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.carregarItens();
     this.carregarTitulos();
     this.carregarLocacoes();
+    this.carregarDependentes();
   }
 
 
@@ -90,6 +98,9 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       this.displayedColumns = ['nome', 'ano', 'sinopse', 'categoria', 'acoes'];
     } else if (this.filtroSelecionado === 'socios') {
       this.itensFiltrados.data = this.socios;
+      this.displayedColumns = ['nome', 'acoes', 'statusCliente'];
+    } else if (this.filtroSelecionado === 'dependentes') {
+      this.itensFiltrados.data = this.dependentes;
       this.displayedColumns = ['nome', 'acoes'];
     }
     else if (this.filtroSelecionado === 'locacoes') {
@@ -123,6 +134,16 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     );
   }
 
+  carregarDependentes(): void {
+    this.dependenteService.getList().subscribe(
+      data => {
+        this.dependentes = data;
+        this.filtrarDados();
+      },
+      error => console.error('Erro ao carregar dependentes', error)
+    );
+  }
+
   carregarDiretores(): void {
     this.diretorService.getList().subscribe(
       data => {
@@ -152,7 +173,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     );
   }
   carregarSocios(): void {
-    this.socioService.getList().subscribe(
+    this.clienteService.getList().subscribe(
       data => {
         this.socios = data;
         this.filtrarDados();
@@ -200,6 +221,9 @@ export class TabelaComponent implements OnInit, AfterViewInit {
         break;
       case 'locacoes':
           rotaCadastro = '/efetuar-locacao';
+          break;
+      case 'dependentes':
+          rotaCadastro = '/cadastro-dependente';
           break;
     }
 
@@ -292,7 +316,36 @@ export class TabelaComponent implements OnInit, AfterViewInit {
           error => console.error('Erro ao apagar locação', error)
         );
       }
+      else if (this.filtroSelecionado === 'dependentes') {
+        this.dependenteService.delete(item.id).subscribe(
+          () => {
+            this.carregarDependentes();
+            this.filtrarDados();
+            console.log('Dependente apagado com sucesso.');
+          },
+          error => console.error('Erro ao apagar dependente', error)
+        );
+      } 
     }
+  }
+
+  toggleAtivo(item: any): void {
+    if(item.ativo == true){
+      this.clienteService.desativar(item.id).subscribe(response => {
+        alert('Item desativado com sucesso');
+        console.log('Status atualizado:', response);
+      });
+    } else {
+      this.clienteService.ativar(item.id).subscribe(response => {
+        alert('Item ativado com sucesso');
+        console.log('Status atualizado:', response);
+      });
+    }
+
+    // Inverte o valor do atributo 'ativo'
+    item.ativo = !item.ativo;
+
+
   }
 
 }

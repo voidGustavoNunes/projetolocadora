@@ -1,23 +1,19 @@
+import { Cliente } from "./cliente";
 import { Socio } from "./socio";
 
-export class Dependente {
+export class Dependente extends Cliente {
   socio: Socio | undefined;
-  id?: number;
-  nome: string = '';
-  dataNascimento: string = '';
-  sexo: string = '';
+  socioId?: number;
 
   constructor(
-    id: | undefined = undefined,
+    id: number | undefined = undefined,
     nome: string = '',
     sexo: string = '',
     dataNascimento: string = '',
-    socio?: Socio
+    ativo: boolean = true,
+    socioId?: number
   ) {
-    this.socio = socio;
-    this.id = id;
-    this.nome = nome;
-    this.dataNascimento = dataNascimento;
-    this.sexo = sexo;
+    super(id, nome, '', sexo, dataNascimento, ativo);
+    this.socioId = socioId;
   }
 }

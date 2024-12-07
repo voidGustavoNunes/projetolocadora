@@ -1,46 +1,38 @@
-<div class="modal-header">
-  <h5 class="modal-title">Cadastrar Dependente</h5>
-  <button type="button" class="btn-close" (click)="fecharModal()"></button>
-</div>
-<div class="modal-body">
-  <form #dependenteForm="ngForm">
+<div class="container form-container mt-5">
+  <h2>Editar Dependente</h2>
+  <form (ngSubmit)="salvar()" #diretorForm="ngForm">
     <div class="form-group">
-      <label for="nomeDependente">Nome:</label>
-      <input
-        type="text"
-        id="nomeDependente"
-        class="form-control"
-        [(ngModel)]="dependente.nome"
-        name="nome"
-        required
-      />
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" class="form-control" [(ngModel)]="dependente.nome" name="nome" required #nome="ngModel">
+      <div *ngIf="nome.invalid && nome.touched" class="text-danger">
+        O nome do dependente é obrigatório.
+      </div>
     </div>
-    <div class="form-group">
-      <label for="sexoDependente">Sexo:</label>
-      <select
-        id="sexoDependente"
-        class="form-control"
-        [(ngModel)]="dependente.sexo"
-        name="sexo"
-        required
-      >
-        <option *ngFor="let s of sexo" [value]="s">{{ s }}</option>
-      </select>
+
+    <ng-container *ngIf="sexo.length > 0">
+      <div class="form-group col-sm-6">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" class="form-control" [(ngModel)]="dependente.sexo" name="sexo" required #sexoModel="ngModel">
+          <option *ngFor="let s of sexo" [value]="s">{{ s }}</option>
+        </select>
+        <div *ngIf="sexoModel.invalid && sexoModel.touched" class="text-danger">
+          O sexo é obrigatório.
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="form-group col-sm-6">
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input type="date" id="dataNascimento" class="form-control" [(ngModel)]="dependente.dataNascimento" name="dataNascimento" required #dataNascimento="ngModel">
+      <div *ngIf="dataNascimento.invalid && dataNascimento.touched" class="text-danger">
+        A data de nascimento é obrigatória.
+      </div>
     </div>
-    <div class="form-group">
-      <label for="dataNascimentoDependente">Data de Nascimento:</label>
-      <input
-        type="date"
-        id="dataNascimentoDependente"
-        class="form-control"
-        [(ngModel)]="dependente.dataNascimento"
-        name="dataNascimento"
-        required
-      />
+
+
+    <div class="d-flex justify-content-end mt-3 gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="btn btn-success" [disabled]="diretorForm.invalid">Salvar</button>
     </div>
   </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
-  <button type="button" class="btn btn-primary" (click)="salvar()">Salvar</button>
 </div>

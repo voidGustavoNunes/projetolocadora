@@ -14,3 +14,13 @@ h2 {
   font-size: 2rem;
   color: #2b6cb0;
 }
+
+
+.cliente {
+  background-color: #d4edda;
+}
+
+/* Linha vermelha para dependentes */
+.dependente {
+  background-color: #f8d7da;
+}

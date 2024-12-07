@@ -7,11 +7,12 @@
     <select class="form-control" id="filtro" [(ngModel)]="filtroSelecionado" (change)="filtrarDados()">
       <option value="atores">Atores</option>
       <option value="classes">Classes</option>
+      <option value="socios">Clientes</option>
+      <option value="dependentes">Dependentes</option>
       <option value="diretores">Diretores</option>
       <option value="itens">Itens</option>
-      <option value="títulos">Títulos</option>
-      <option value="socios">Sócios</option>
       <option value="locacoes">Locações</option>
+      <option value="títulos">Títulos</option>
     </select>
   </div>
 
@@ -26,6 +27,9 @@
     <ng-container *ngIf="filtroSelecionado === 'diretores'">
       <h2>Diretores</h2>
     </ng-container>
+    <ng-container *ngIf="filtroSelecionado === 'dependentes'">
+      <h2>Dependentes</h2>
+    </ng-container>
     <ng-container *ngIf="filtroSelecionado === 'itens'">
       <h2>Itens</h2>
     </ng-container>
@@ -33,7 +37,7 @@
       <h2>Títulos</h2>
     </ng-container>
     <ng-container *ngIf="filtroSelecionado === 'socios'">
-      <h2>Sócios</h2>
+      <h2>Clientes</h2>
     </ng-container>
     <ng-container *ngIf="filtroSelecionado === 'locacoes'">
       <h2>Locações</h2>
@@ -170,11 +174,36 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="statusCliente">
+        <th mat-header-cell *matHeaderCellDef> Tipo de Cliente </th>
+        <td mat-cell *matCellDef="let cliente">
+          <ng-container *ngIf="filtroSelecionado === 'socios'">
+            <span *ngIf="cliente.ehDependente">Dependente</span>
+            <span *ngIf="!cliente.ehDependente">Sócio</span>
+          </ng-container>
+          <ng-container *ngIf="filtroSelecionado === 'dependentes'">
+            <span *ngIf="cliente.ehDependente">Dependente</span>
+          </ng-container>
+        </td>
+      </ng-container>
+
+
+
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef> Ações </th>
         <td mat-cell *matCellDef="let item">
           <button class="btn btn-primary" (click)="editarItem(item)">Editar</button>
           <button class="btn btn-danger" (click)="apagarItem(item)">Apagar</button>
+          
+          <!-- Botões Ativar/Desativar Condicionais -->
+          <ng-container *ngIf="filtroSelecionado === 'socios' || filtroSelecionado === 'dependentes'">
+            <button 
+              class="btn" 
+              [ngClass]="item.ativo ? 'btn-secondary' : 'btn-success'" 
+              (click)="toggleAtivo(item)">
+              {{ item.ativo ? 'Desativar' : 'Ativar' }}
+            </button>
+          </ng-container>
         </td>
       </ng-container>
 

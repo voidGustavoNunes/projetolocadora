@@ -16,10 +16,11 @@ export class SocioService extends GenericService<Socio, number>{
 
   constructor(override httpClient: HttpClient) {
     super(httpClient);
-   }
+  }
 
-   getAll() {
+  getAll() {
     return this.httpClient.get<Socio[]>(`${this.baseUrl}/socios`);
   }
+
 
 }

@@ -23,10 +23,11 @@ export class Socio extends Cliente {
     this.dependentes = dependentes;
   }
 
-  adicionarDependente(dependente: Dependente): void {
-    if (this.dependentes.length >= 3) {
-      throw new Error('O sócio já possui três dependentes ativos.');
-    }
-    this.dependentes.push(dependente);
-  }
+  // adicionarDependente(dependente: Dependente): void {
+  //   if (this.dependentes.length >= 3) {
+  //     alert('O sócio já possui três dependentes ativos.');
+  //     throw new Error('O sócio já possui três dependentes ativos.');
+  //   }
+  //   this.dependentes.push(dependente);
+  // }
 }

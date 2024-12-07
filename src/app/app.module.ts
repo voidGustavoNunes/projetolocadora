@@ -48,6 +48,7 @@ import { LocacaoService } from './service/locacaoService';
 import { TituloService } from './service/tituloService';
 import { SocioService } from './service/socioService';
 import { TelefoneMaskDirective } from './components/base/directive/telefone-mask.directive';
+import { ClienteService } from './service/clienteService';
 
 
 const routes : Routes = [
@@ -125,6 +126,7 @@ const routes : Routes = [
               SocioService,
               LocacaoService,
               DevolucaoService,
+              ClienteService,
               HomeComponent,
   ],
   bootstrap: [AppComponent]

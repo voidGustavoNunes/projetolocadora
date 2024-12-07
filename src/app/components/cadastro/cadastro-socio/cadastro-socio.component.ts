@@ -43,11 +43,11 @@ export class CadastroSocioComponent {
       return;
     }
 
-    const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
-    if (!telefoneRegex.test(this.socio.telefone)) {
-      alert('O telefone deve estar no formato (XX) XXXXX-XXXX.');
-      return;
-    }
+    // const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+    // if (!telefoneRegex.test(this.socio.telefone)) {
+    //   alert('O telefone deve estar no formato (XX) XXXXX-XXXX.');
+    //   return;
+    // }
 
     if (this.socio.id !== undefined && this.socio.id !== null) {
       this.socioService.update(this.socio.id, this.socio).subscribe(() => {
@@ -81,38 +81,54 @@ export class CadastroSocioComponent {
       alert('Não é possível adicionar mais de 3 dependentes.');
       return;
     }
-
+  
+    if (!this.socio.dependentes) {
+      this.socio.dependentes = [];
+    } else {
+      this.socio.dependentes.forEach(dependente => {
+        // Remover a referência cíclica para 'socio'
+        delete dependente.socio;
+      });
+    }
+  
     if (this.dependente.nome?.trim() && this.dependente.sexo && this.dependente.dataNascimento) {
       if (this.dependenteEditando !== null) {
         // Modo de edição
         this.socio.dependentes[this.dependenteEditando] = {...this.dependente};
-        this.dependenteEditando = null;
       } else {
         // Modo de adição
         this.socio.dependentes.push({...this.dependente});
       }
-
+  
       const modalElement = document.getElementById('modalDependente')!;
       const modal = bootstrap.Modal.getInstance(modalElement);
-
+  
       if (modal) {
         modal.hide();
       }
-
+  
       // Limpa o formulário de dependente
       this.dependente = new Dependente();
     } else {
       alert('Preencha todos os campos do dependente.');
     }
   }
+  
 
-  removerDependente(index: number): void {
-    if (index >= 0 && index < this.socio.dependentes.length) {
-      this.socio.dependentes.splice(index, 1);
-    } else {
-      console.error('Índice inválido ao remover dependente.');
-    }
-  }
+  // removerDependente(dependente: any): void {
+  //   const index = this.socio.dependentes.indexOf(dependente);
+  
+  //   if (index >= 0) {
+  //     // Agora você pode acessar o ID do dependente
+  //     const dependenteId = dependente.id;
+  //     console.log('Removendo dependente com ID:', dependenteId);
+  
+  //     // Remover o dependente da lista
+  //     this.socio.dependentes.splice(index, 1);
+  //   } else {
+  //     console.error('Dependente não encontrado na lista.');
+  //   }
+  // }
 
   editarDependente(index: number): void {
     this.dependenteEditando = index;
