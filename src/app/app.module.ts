@@ -49,6 +49,7 @@ import { TituloService } from './service/tituloService';
 import { SocioService } from './service/socioService';
 import { TelefoneMaskDirective } from './components/base/directive/telefone-mask.directive';
 import { ClienteService } from './service/clienteService';
+import { PesquisaTituloComponent } from './components/listagem/pesquisa-titulo/pesquisa-titulo.component';
 
 
 const routes : Routes = [
@@ -64,6 +65,7 @@ const routes : Routes = [
   {path: 'classes/:id', component: ClasseComponent},
   {path: 'efetuar-locacao', component: EfetuarLocacaoComponent},
   {path: 'efetuar-devolucao', component: EfetuarDevolucaoComponent},
+  {path: 'pesquisa-titulo', component: PesquisaTituloComponent},
 
   {path: 'diretores/:id', component: DiretorComponent},
   {path: 'diretores', component: DiretorComponent},
@@ -103,6 +105,7 @@ const routes : Routes = [
     EfetuarLocacaoComponent,
     EfetuarDevolucaoComponent,
     TelefoneMaskDirective,
+    PesquisaTituloComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

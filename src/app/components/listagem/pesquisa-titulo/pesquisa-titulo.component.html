@@ -1,0 +1,21 @@
+<div>
+  <h2>Lista de Títulos</h2>
+
+  <div>
+    <label for="buscar">Buscar: </label>
+    <input id="buscar" #searchTerm type="text" />
+    <button (click)="buscarTitulosPorNome(searchTerm.value)">Buscar por Nome</button>
+    <button (click)="buscarTitulosPorCategoria(searchTerm.value)">Buscar por Categoria</button>
+    <button (click)="buscarTitulosPorAtor(searchTerm.value)">Buscar por Ator</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <ul>
+    <li *ngFor="let titulo of titulos">
+      {{ titulo.nome }} - {{ titulo.ano }}
+    </li>
+  </ul>
+</div>

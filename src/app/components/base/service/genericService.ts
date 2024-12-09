@@ -12,6 +12,7 @@ export class GenericService<T, ID> {
   constructor(protected httpClient: HttpClient) { }
 
   getList(): Observable<T[]> {
+    console.log('================== '+ this.baseUrl);
     return this.httpClient.get<T[]>(this.baseUrl);
   }
 
