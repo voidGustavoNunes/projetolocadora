@@ -105,7 +105,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     }
     else if (this.filtroSelecionado === 'locacoes') {
       this.itensFiltrados.data = this.locacoes; //
-      this.displayedColumns = ['socio', 'numeroSerieLocacao', 'dataDevolucaoPrevista', 'valorLocacao', 'status', 'acoes'];
+      this.displayedColumns = ['socios', 'numeroSerieLocacao', 'dataDevolucaoPrevista', 'valorLocacao', 'status', 'acoes'];
     }
 
     if (this.paginator) {

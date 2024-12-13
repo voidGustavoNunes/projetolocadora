@@ -56,4 +56,10 @@ export class ItemService extends GenericService<Item, ID>{
       );
     }
 
+    getCountByTituloId(tituloId: number): Observable<number> {
+      const itemUrl = `http://localhost:8080/itens/count`;
+
+      return this.httpClient.get<number>(`${this.baseUrl}?tituloId=${tituloId}`);
+    }
+
 }

@@ -13,6 +13,7 @@ export class Titulo {
   categoria: string | undefined;
   classe: Classe | undefined;
   selecionado: boolean = false;
+  quantidade: number| undefined;
 
   constructor(
     id: ID | undefined = undefined,
@@ -22,7 +23,8 @@ export class Titulo {
     ano?: number,
     sinopse?: string,
     categoria?: string,
-    classe?: Classe
+    classe?: Classe,
+    quantidade?: number
   ) {
     this.id = id;
     this.nome = nome;
@@ -32,5 +34,6 @@ export class Titulo {
     this.sinopse = sinopse;
     this.categoria = categoria;
     this.classe = classe;
+    this.quantidade = quantidade;
   }
 }

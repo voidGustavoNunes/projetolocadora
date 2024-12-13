@@ -53,7 +53,6 @@ export class CadastroTituloComponent implements OnInit{
         ...ator,
         selecionado: this.titulo.atores.some(a => a.id === ator.id)
       }));
-      console.log(this.atores)
     });
   }
   listarDiretores() {
@@ -69,6 +68,8 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   salvar(): void {
+    this.titulo.atores = this.atores.filter(ator => ator.selecionado);
+
     if (this.diretorId) {
       this.titulo.diretor = this.diretores.find(d => d.id === this.diretorId);
     }
@@ -88,11 +89,18 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   toggleAtor(ator: Ator): void {
-    ator.selecionado = !ator.selecionado;
-    if (ator.selecionado) {
-      this.titulo.atores.push(ator);
-    } else {
-      this.titulo.atores = this.titulo.atores.filter(a => a.id !== ator.id);
+    const atorOriginal = this.atores.find(a => a.id === ator.id);
+
+    if (atorOriginal) {
+      // atorOriginal.selecionado = !atorOriginal.selecionado;
+
+      if (atorOriginal.selecionado) {
+        if (!this.titulo.atores.some(a => a.id === atorOriginal.id)) {
+          this.titulo.atores.push(atorOriginal);
+        }
+      } else {
+        this.titulo.atores = this.titulo.atores.filter(a => a.id !== atorOriginal.id);
+      }
     }
   }
 

@@ -1,21 +1,80 @@
-<div>
-  <h2>Lista de Títulos</h2>
+<div class="container">
+  <h2>Listagem de Títulos</h2>
 
-  <div>
-    <label for="buscar">Buscar: </label>
-    <input id="buscar" #searchTerm type="text" />
-    <button (click)="buscarTitulosPorNome(searchTerm.value)">Buscar por Nome</button>
-    <button (click)="buscarTitulosPorCategoria(searchTerm.value)">Buscar por Categoria</button>
-    <button (click)="buscarTitulosPorAtor(searchTerm.value)">Buscar por Ator</button>
-  </div>
-
-  <div *ngIf="errorMessage" class="error">
+  <!-- Exibição de mensagem de erro -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
     {{ errorMessage }}
   </div>
 
-  <ul>
-    <li *ngFor="let titulo of titulos">
-      {{ titulo.nome }} - {{ titulo.ano }}
-    </li>
-  </ul>
+  <div>
+    <!-- Dropdown para filtrar por nome do título -->
+    <select id="nome" class="form-select" (change)="onTituloNomeChange($event)">
+      <option value="NomeTitulo">Todos os Títulos</option>
+      <option *ngFor="let nomeTitulo of nomesTitulos" [value]="nomeTitulo">{{ nome }}</option>
+    </select>
+  </div>
+
+  <div>
+    <!-- Dropdown para filtrar por categoria -->
+    <select id="categoria" class="form-select" (change)="onCategoriaChange($event)">
+      <option value="Categorias">Todas as Categorias</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+    </select>
+  </div>
+
+  <div>
+    <!-- Dropdown para filtrar por ator -->
+    <select id="ator" class="form-select" (change)="onAtorChange($event)">
+      <option value="Atores">Todos os Atores</option>
+      <option *ngFor="let ator of atores" [value]="ator">{{ ator }}</option>
+    </select>
+  </div>
+
+
+
+
+  <!-- Verificação se há títulos a serem exibidos -->
+  <table *ngIf="titulos.length > 0" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Ano</th>
+        <th>Atores</th>
+        <th>Diretores</th>
+        <th>Ano</th>
+        <th>Nome Original</th>
+        <th>Nacionalidades</th>
+        <th>Sinopse</th>
+        <th>Classe</th>
+        <th>Valor da Locação</th>
+        <th>Distribuidor</th>
+        <th>Quantidade de fitas disponíveis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let titulo of titulos">
+        <td>{{ titulo.id }}</td>
+        <td>{{ titulo.nome }}</td>
+        <td>{{ titulo.categoria }}</td>
+        <td>{{ titulo.ano }}</td>
+        <td>{{ titulo.atores?.join(', ') }}</td>
+        <td>{{ titulo.diretor?.nome }}</td>
+        <td>{{ titulo.ano }}</td>
+        <td>{{ titulo.nome }}</td>
+        <td>{{ 'Brasil' }}</td>
+        <td>{{ titulo.sinopse }}</td>
+        <td>{{ titulo.classe?.nome }}</td>
+        <td>{{ titulo.classe?.valor }}</td>
+        <td>{{ 'SONY' }}</td>
+        <td>{{ titulo.quantidade || 0 }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Mensagem caso não haja títulos -->
+  <div *ngIf="titulos.length === 0" class="alert alert-info">
+    Nenhum título encontrado.
+  </div>
 </div>
