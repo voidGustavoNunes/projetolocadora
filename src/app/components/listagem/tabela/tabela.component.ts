@@ -325,7 +325,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
           },
           error => console.error('Erro ao apagar dependente', error)
         );
-      } 
+      }
     }
   }
 
