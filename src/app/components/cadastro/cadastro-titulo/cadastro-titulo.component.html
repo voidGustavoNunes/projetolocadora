@@ -35,9 +35,9 @@
           <input type="checkbox"
                  [id]="'ator-' + ator.id"
                  class="form-check-input"
-                 [(ngModel)]="ator.selecionado"
-                 name="atores"
-                 (change)="toggleAtor(ator)">
+                 [checked]="ator.id !== undefined && isAtorSelecionado(+ator.id)"
+                 (change)="toggleAtor(ator)"
+                 name="atores">
           <label [for]="'ator-' + ator.id" class="form-check-label">{{ ator.nome }}</label>
         </div>
       </ng-container>

@@ -24,6 +24,8 @@ export class CadastroTituloComponent implements OnInit{
   classe = new Classe();
   diretor = new Diretor();
 
+  atoresSelecionados: number[] = [];
+
 
 
   diretorId: ID | undefined;
@@ -36,25 +38,31 @@ export class CadastroTituloComponent implements OnInit{
 
   ngOnInit(): void {
     if (history.state.item) {
-      this.titulo = history.state.item;
+      this.titulo = {...history.state.item};
+
+      // Inicializa atoresSelecionados com os IDs dos atores do título
+      this.atoresSelecionados = this.titulo.atores.map(ator => ator.id).filter(id => id !== undefined) as number[];
+
       this.diretorId = this.titulo.diretor?.id;
       this.classeId = this.titulo.classe?.id;
     }
+
     this.listarAtores();
     this.listarDiretores();
     this.listarClasses();
-
-
   }
 
   listarAtores() {
     this.atorService.getList().subscribe(data => {
-      this.atores = data.map(ator => ({
-        ...ator,
-        selecionado: this.titulo.atores.some(a => a.id === ator.id)
-      }));
+      this.atores = data;
     });
   }
+
+  isAtorSelecionado(atorId: number): boolean {
+    return this.atoresSelecionados.includes(atorId);
+  }
+
+
   listarDiretores() {
     this.diretorService.getList().subscribe(data => {
       this.diretores = data;
@@ -68,11 +76,20 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   salvar(): void {
-    this.titulo.atores = this.atores.filter(ator => ator.selecionado);
+    // Garante que o título mantenha os atores originais se nenhuma alteração for feita
+    if (this.atoresSelecionados.length === 0 && this.titulo.atores.length > 0) {
+      this.atoresSelecionados = this.titulo.atores.map(ator => ator.id).filter(id => id !== undefined) as number[];
+    }
+
+    // Atualiza os atores do título
+    this.titulo.atores = this.atores.filter(ator =>
+      typeof ator.id === 'number' && this.atoresSelecionados.includes(ator.id)
+    );
 
     if (this.diretorId) {
       this.titulo.diretor = this.diretores.find(d => d.id === this.diretorId);
     }
+
     if (this.classeId) {
       this.titulo.classe = this.classes.find(c => c.id === this.classeId);
     }
@@ -89,18 +106,24 @@ export class CadastroTituloComponent implements OnInit{
   }
 
   toggleAtor(ator: Ator): void {
-    const atorOriginal = this.atores.find(a => a.id === ator.id);
+    // Verifica se o ID do ator é um número válido
+    if (ator.id !== undefined) {
+      const index = typeof ator.id === 'number' ? this.atoresSelecionados.indexOf(ator.id) : -1;
 
-    if (atorOriginal) {
-      // atorOriginal.selecionado = !atorOriginal.selecionado;
-
-      if (atorOriginal.selecionado) {
-        if (!this.titulo.atores.some(a => a.id === atorOriginal.id)) {
-          this.titulo.atores.push(atorOriginal);
-        }
+      if (index > -1) {
+        // Remove o ator se já estiver selecionado
+        this.atoresSelecionados.splice(index, 1);
       } else {
-        this.titulo.atores = this.titulo.atores.filter(a => a.id !== atorOriginal.id);
+        // Adiciona o ator se não estiver selecionado
+        if (typeof ator.id === 'number') {
+          this.atoresSelecionados.push(ator.id);
+        }
       }
+
+      // Atualiza a lista de atores do título com base nos IDs selecionados
+      this.titulo.atores = this.atores.filter(a =>
+        typeof a.id === 'number' && this.atoresSelecionados.includes(a.id)
+      );
     }
   }
 

@@ -1,80 +1,100 @@
-<div class="container">
-  <h2>Listagem de Títulos</h2>
+<div class="container-fluid px-4 py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="mb-0">Listagem de Títulos</h2>
+        </div>
 
-  <!-- Exibição de mensagem de erro -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
+        <!-- Mensagem de Erro -->
+        <div *ngIf="errorMessage" class="alert alert-danger m-3">
+          {{ errorMessage }}
+        </div>
 
-  <div>
-    <!-- Dropdown para filtrar por nome do título -->
-    <select id="nome" class="form-select" (change)="onTituloNomeChange($event)">
-      <option value="NomeTitulo">Todos os Títulos</option>
-      <option *ngFor="let nomeTitulo of nomesTitulos" [value]="nomeTitulo">{{ nome }}</option>
-    </select>
-  </div>
+        <!-- Filtros -->
+        <div class="card-body">
+          <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4">
+              <label for="nome" class="form-label">Filtrar por Título</label>
+              <select id="nome" class="form-select" (change)="onTituloNomeChange($event)">
+                <option value="NomeTitulo">Todos os Títulos</option>
+                <option *ngFor="let nomeTitulo of nomesTitulos" [value]="nomeTitulo">
+                  {{ nomeTitulo }}
+                </option>
+              </select>
+            </div>
 
-  <div>
-    <!-- Dropdown para filtrar por categoria -->
-    <select id="categoria" class="form-select" (change)="onCategoriaChange($event)">
-      <option value="Categorias">Todas as Categorias</option>
-      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-    </select>
-  </div>
+            <div class="col-12 col-md-4">
+              <label for="categoria" class="form-label">Filtrar por Categoria</label>
+              <select id="categoria" class="form-select" (change)="onCategoriaChange($event)">
+                <option value="Categorias">Todas as Categorias</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria">
+                  {{ categoria }}
+                </option>
+              </select>
+            </div>
 
-  <div>
-    <!-- Dropdown para filtrar por ator -->
-    <select id="ator" class="form-select" (change)="onAtorChange($event)">
-      <option value="Atores">Todos os Atores</option>
-      <option *ngFor="let ator of atores" [value]="ator">{{ ator }}</option>
-    </select>
-  </div>
+            <div class="col-12 col-md-4">
+              <label for="ator" class="form-label">Filtrar por Ator</label>
+              <select id="ator" class="form-select" (change)="onAtorChange($event)">
+                <option value="Atores">Todos os Atores</option>
+                <option *ngFor="let ator of nomesAtores" [value]="ator">
+                  {{ ator }}
+                </option>
+              </select>
+            </div>
+          </div>
 
+          <!-- Tabela de Títulos -->
+          <div class="table-responsive">
+            <table *ngIf="filteredTitulos.length > 0" class="table table-hover table-bordered table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Categoria</th>
+                  <th>Ano</th>
+                  <th>Atores</th>
+                  <th>Diretor</th>
+                  <th>Nome Original</th>
+                  <th>Nacionalidade</th>
+                  <th>Sinopse</th>
+                  <th>Classe</th>
+                  <th>Valor Locação</th>
+                  <th>Distribuidor</th>
+                  <th>Fitas Disponíveis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let titulo of filteredTitulos">
+                  <td>{{ titulo.id }}</td>
+                  <td>{{ titulo.nome }}</td>
+                  <td>{{ titulo.categoria }}</td>
+                  <td>{{ titulo.ano }}</td>
+                  <td>{{ getNomesAtores(titulo.atores) }}</td>
+                  <td>{{ titulo.diretor?.nome || 'Não informado' }}</td>
+                  <td>{{ titulo.nome }}</td>
+                  <td>{{ 'Brasil' }}</td>
+                  <td>
+                    <span class="text-truncate" style="max-width: 150px; display: inline-block;">
+                      {{ titulo.sinopse || 'Sem sinopse' }}
+                    </span>
+                  </td>
+                  <td>{{ titulo.classe?.nome }}</td>
+                  <td>R$ {{ titulo.classe?.valor?.toFixed(2) || '0,00' }}</td>
+                  <td>{{ 'SONY' }}</td>
+                  <td>{{ titulo.quantidade || 0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-
-
-  <!-- Verificação se há títulos a serem exibidos -->
-  <table *ngIf="titulos.length > 0" class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Categoria</th>
-        <th>Ano</th>
-        <th>Atores</th>
-        <th>Diretores</th>
-        <th>Ano</th>
-        <th>Nome Original</th>
-        <th>Nacionalidades</th>
-        <th>Sinopse</th>
-        <th>Classe</th>
-        <th>Valor da Locação</th>
-        <th>Distribuidor</th>
-        <th>Quantidade de fitas disponíveis</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let titulo of titulos">
-        <td>{{ titulo.id }}</td>
-        <td>{{ titulo.nome }}</td>
-        <td>{{ titulo.categoria }}</td>
-        <td>{{ titulo.ano }}</td>
-        <td>{{ titulo.atores?.join(', ') }}</td>
-        <td>{{ titulo.diretor?.nome }}</td>
-        <td>{{ titulo.ano }}</td>
-        <td>{{ titulo.nome }}</td>
-        <td>{{ 'Brasil' }}</td>
-        <td>{{ titulo.sinopse }}</td>
-        <td>{{ titulo.classe?.nome }}</td>
-        <td>{{ titulo.classe?.valor }}</td>
-        <td>{{ 'SONY' }}</td>
-        <td>{{ titulo.quantidade || 0 }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Mensagem caso não haja títulos -->
-  <div *ngIf="titulos.length === 0" class="alert alert-info">
-    Nenhum título encontrado.
+          <!-- Mensagem quando não há títulos -->
+          <div *ngIf="filteredTitulos.length === 0" class="alert alert-info text-center">
+            Nenhum título encontrado.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
