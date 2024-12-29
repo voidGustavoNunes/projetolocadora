@@ -1,7 +1,7 @@
 # Locadora - Frontend
 
 Este repositório contém o código do frontend do sistema de gerenciamento de locadora, desenvolvido com **Angular**.
-
+```markdown
 ## Índice
 - [Visão Geral](#visão-geral)
 - [Funcionalidades](#funcionalidades)
