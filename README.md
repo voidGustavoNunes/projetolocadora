@@ -54,6 +54,8 @@ A interface do sistema de locadora foi projetada para ser responsiva e intuitiva
    npm start
 
 ## Estrutura do projeto
+1. O projeto está estruturado da seguinte forma:
+   
 src/
 ├── app/
 │   ├── components/       # Componentes da aplicação
@@ -62,6 +64,7 @@ src/
 │   └── app.module.ts
 └── assets/
     └── styles.css        # Estilos globais
+|
 
 ## Licença
 Este projeto está licenciado sob a [GNU License](LICENSE). Consulte o arquivo LICENSE para mais detalhes.
