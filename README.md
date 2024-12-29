@@ -1,27 +1,70 @@
-# Projetolocadora
+# Locadora - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+Este repositório contém o código do frontend do sistema de gerenciamento de locadora, desenvolvido com **Angular**.
 
-## Development server
+## Índice
+- [Visão Geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Configuração do Ambiente](#configuração-do-ambiente)
+- [Como Executar](#como-executar)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Licença](#licença)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## Visão Geral
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+A interface do sistema de locadora foi projetada para ser responsiva e intuitiva, facilitando o gerenciamento de filmes, clientes e locações.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Funcionalidades
 
-## Running unit tests
+- Listagem e filtro de filmes.
+- Cadastro e gerenciamento de clientes.
+- Tela de autenticação e registro.
+- Integração com a API backend para locações.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## Tecnologias Utilizadas
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Angular**: Framework para construção de SPA.
+- **TypeScript**: Linguagem principal para o desenvolvimento.
+- **Bootstrap**: Estilização e design responsivo.
+- **RxJS**: Gerenciamento de streams de dados.
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Configuração do Ambiente
+
+1. Certifique-se de ter o **Node.js** e o **Angular CLI** instalados.
+2. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/frontend-locadora.git
+   cd frontend-locadora
+3. Certifique-se de estar na pasta raiz do projeto, então dê esse comando no terminal:
+   ```bash
+   npm install
+   
+## Como executar
+1. Após a conclusão da instalação, execute com o comando:
+   ```bash
+   npm start
+
+## Estrutura do projeto
+src/
+├── app/
+│   ├── components/       # Componentes da aplicação
+│   ├── services/         # Serviços para consumo de APIs
+│   ├── models/           # Modelos de dados
+│   └── app.module.ts
+└── assets/
+    └── styles.css        # Estilos globais
+
+## Licença
+Este projeto está licenciado sob a [GNU License](LICENSE). Consulte o arquivo LICENSE para mais detalhes.
+
+### O backend está localizado na seguinte url: https://github.com/voidGustavoNunes/videoLocadoraPassatempoBackend
+
